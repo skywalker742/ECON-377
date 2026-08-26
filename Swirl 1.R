@@ -9,7 +9,7 @@ install_course_github('isaaccloh', '377_swirl')
 #starting up swirl 
 
 swirl()
-Mac
+macr
 #select course
 1
 #select lesson
