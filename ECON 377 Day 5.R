@@ -16,9 +16,13 @@ log(exp(3))                     # exp then log -> back to 3
 
 ## --- Expected value:  E[X] = sum of  value * probability  (we fill this in together) ---
 ## a random variable's values and their probabilities (must sum to 1)
-x <- ______        # the values -- a colon makes a sequence, e.g. 1:6 for a die
-p <- ______        # the probabilities -- rep() repeats a value, e.g. rep(1/6, 6)
+x <- (1:6)        # the values -- a colon makes a sequence, e.g. 1:6 for a die
+p <- rep(1/6, 6)        # the probabilities -- rep() repeats a value, e.g. rep(1/6, 6)
 ## E[X] is a weighted average: sum of  x * p
-______
+x * p
+
 ## E[X^2] weights the SQUARED values: sum of  x^2 * p
-______
+sum(x*p)
+
+die = rep(1:6)
+x^2 * die
