@@ -1,0 +1,245 @@
+#### ==================================================================
+#### ECON 377 - Problem Set 4 (Questions 1 - 7)
+#### Theoretical Questions, Options, & Correct Answers
+#### ==================================================================
+
+#### Question 1:
+#### For any constant c, the expected value E[c] equals:
+#### Options:
+####   - c * X
+####   - c
+####   - 0
+####   - E[X]
+#### Property: E[c] = c (The expected value of a constant is the constant itself)
+#### Correct Answer: c
+
+
+#### Question 2:
+#### If X and Y are independent, then Cov(X, Y) equals:
+#### Options:
+####   - Var(X)
+####   - E[XY]
+####   - 0
+####   - 1
+#### Property: Independence implies zero linear relationship, so Cov(X, Y) = 0
+#### Correct Answer: 0
+
+
+#### Question 3:
+#### The correlation Cor(X, Y) always lies:
+#### Options:
+####   - Between -1 and 1
+####   - Between 0 and the covariance
+####   - Between 0 and 1
+#### Property: Cor(X, Y) is normalized to always fall strictly within [-1, 1]
+#### Correct Answer: Between -1 and 1
+
+
+#### Question 4:
+#### The variance of a random variable X equals:
+#### Options:
+####   - E[X] - E[X^2]
+####   - E[X^2] - (E[X])^2
+####   - sqrt(E[X])
+####   - (E[X])^2
+#### Property: Standard variance formula is Var(X) = E[X^2] - (E[X])^2
+#### Correct Answer: E[X^2] - (E[X])^2
+
+
+#### Question 5:
+#### Compared with the covariance, the correlation is:
+#### Options:
+####   - Always larger than the covariance
+####   - Zero for dependent variables
+####   - Measured in the units of X times Y
+####   - Unitless and always between -1 and 1
+#### Property: Standard deviation scaling removes units, making correlation unitless
+#### Correct Answer: Unitless and always between -1 and 1
+
+
+#### Question 6:
+#### E[Y | X = x] is best described as:
+#### Options:
+####   - The average of X
+####   - The average of Y among observations with X = x
+####   - The average of all Y values
+####   - The correlation of X and Y
+#### Property: Conditional expectation evaluates the mean of Y restricted to the subgroup where X = x
+#### Correct Answer: The average of Y among observations with X = x
+
+
+#### Question 7:
+#### If X and Y are independent, then Var(X + Y) equals:
+#### Options:
+####   - Var(X) - Var(Y)
+####   - Var(X) + Var(Y) + 2 Cov(X, Y)
+####   - Var(X) + Var(Y)
+####   - Var(X) * Var(Y)
+#### Property: Var(X + Y) = Var(X) + Var(Y) + 2 Cov(X, Y); when independent, Cov(X, Y) = 0
+#### Correct Answer: Var(X) + Var(Y)
+
+#### ==================================================================
+#### ECON 377 - Problem Set 4 (Questions 8 - 22)
+#### Full Quiz Question Text + Starter Code Solutions
+#### ==================================================================
+
+rm(list = ls()) # Clear workspace memory [2]
+
+
+#### ===== 1. Linearity of Expectation (Questions 8-10) =====
+
+#### Question 8:
+#### Expectation is linear: E[aX + b] = a E[X] + b. 
+#### Given E[X] = 1, a = 6, and b = 3, find E[aX + b]. (round to the hundredths) [4]
+EX <- 1
+a  <- 6
+b  <- 3
+E_aX_b <- a * EX + b                   # E[6X + 3] = 6*(1) + 3
+E_aX_b                                 # Output: 9.00
+
+
+#### Question 9:
+#### Given E[X] = 8, E[Y] = 3, a = 5, and b = 2, 
+#### find E[aX + bY] = a E[X] + b E[Y]. (round to the hundredths) [4]
+EX <- 8
+EY <- 3
+a  <- 5
+b  <- 2
+E_aX_bY <- a * EX + b * EY             # E[5X + 2Y] = 5*(8) + 2*(3)
+E_aX_bY                                # Output: 46.00
+
+
+#### Question 10:
+#### Given E[X] = 4, E[Y] = 7, 
+#### find E[aX + bY - c] = a E[X] + b E[Y] - c with a = 4, b = 3, c = 7. (round to the hundredths) [4]
+EX    <- 4
+EY    <- 7
+a     <- 4
+b     <- 3
+c_val <- 7
+E_comb <- a * EX + b * EY - c_val      # E[4X + 3Y - 7] = 4*(4) + 3*(7) - 7
+E_comb                                 # Output: 30.00
+
+
+#### ===== 2. Variance & Standard Deviation (Questions 11-14) =====
+
+#### Question 11:
+#### Given E[X] = 6 and E[X^2] = 53, 
+#### find Var(X) = E[X^2] - (E[X])^2. (round to the hundredths) [4]
+EX   <- 6
+EX2  <- 53
+VarX <- EX2 - EX^2                    # Var(X) = 53 - 6^2 [6]
+VarX                                  # Output: 17.00
+
+
+#### Question 12:
+#### A variance property: Var(aX + b) = a^2 Var(X). 
+#### Given Var(X) = 6 and a = 3, find Var(aX + b). (round to the hundredths) [4]
+VarX <- 6
+a    <- 3
+Var_aX_b <- (a^2) * VarX              # Var(3X + b) = 3^2 * 6
+Var_aX_b                              # Output: 54.00
+
+
+#### Question 13:
+#### The standard deviation is sd(X) = sqrt(Var(X)). 
+#### Given Var(X) = 10, find sd(X). (round to the hundredths) [4]
+VarX <- 10
+sdX  <- sqrt(VarX)                    # sd(X) = sqrt(10) [7]
+round(sdX, 2)                         # Output: 3.16
+
+
+#### Question 14:
+#### If X and Y are independent, Var(X + Y) = Var(X) + Var(Y). 
+#### Given Var(X) = 1 and Var(Y) = 6, find Var(X + Y). (round to the hundredths) [5]
+VarX <- 1
+VarY <- 6
+Var_sum <- VarX + VarY                 # Var(X + Y) = 1 + 6
+Var_sum                                # Output: 7.00
+
+
+#### ===== 3. Covariance & Correlation (Questions 15-19) =====
+
+#### Question 15:
+#### Covariance is Cov(X, Y) = E[XY] - E[X] E[Y]. 
+#### Given E[XY] = 27, E[X] = 6, E[Y] = 3, find Cov(X, Y). (round to the hundredths) [5]
+EXY <- 27
+EX  <- 6
+EY  <- 3
+Cov <- EXY - EX * EY                  # Cov(X, Y) = 27 - (6*3) [6, 7]
+Cov                                   # Output: 9.00
+
+
+#### Question 16:
+#### X and Y take the paired values (3, 1), (2, 1), (5, 1), each pair equally likely (probability 1/3). 
+#### Find Cov(X, Y) = E[XY] - E[X] E[Y]. (round to the hundredths) [5]
+xj  <- c(3, 2, 5)                      # x values for pairs [1, 3]
+yj  <- c(1, 1, 1)                      # y values for pairs [1, 3]
+pj  <- c(1/3, 1/3, 1/3)                # probabilities for each pair [1, 3]
+EX  <- sum(xj * pj)                    # E[X]  = sum(xj * pj) [1, 8]
+EY  <- sum(yj * pj)                    # E[Y]  = sum(yj * pj) [1, 8]
+EXY <- sum(xj * yj * pj)               # E[XY] = sum(xj * yj * pj) [1, 8]
+Cov <- EXY - EX * EY                   # Cov(X, Y) = E[XY] - E[X]*E[Y] [1, 7]
+Cov                                    # Output: 0.00
+
+
+#### Question 17:
+#### A covariance property: Cov(a1 X + b1, a2 Y + b2) = a1 a2 Cov(X, Y). 
+#### Given Cov(X, Y) = -1, a1 = 5, a2 = 3 (and any constants b1, b2), 
+#### find Cov(a1 X + b1, a2 Y + b2). (round to the hundredths) [5]
+Cov <- -1
+a1  <- 5
+a2  <- 3
+Cov_trans <- a1 * a2 * Cov             # Cov(5X + b1, 3Y + b2) = 5*3*(-1)
+Cov_trans                              # Output: -15.00
+
+
+#### Question 18:
+#### Correlation is Cor(X, Y) = Cov(X, Y) / (sd(X) sd(Y)). 
+#### Given Cov(X, Y) = -2, sd(X) = 3, sd(Y) = 4, find Cor(X, Y). (round to the hundredths) [5]
+Cov <- -2
+sdX <- 3
+sdY <- 4
+Cor <- Cov / (sdX * sdY)              # Cor = -2 / (3 * 4) [7, 9]
+round(Cor, 2)                         # Output: -0.17
+
+
+#### Question 19:
+#### Variance and covariance combine as Var(aX + bY) = a^2 Var(X) + b^2 Var(Y) + 2ab Cov(X, Y). 
+#### Given Var(X) = 5, Var(Y) = 6, Cov(X, Y) = -1, a = 1, b = 3, find Var(aX + bY). (round to the hundredths) [5]
+VarX <- 5
+VarY <- 6
+Cov  <- -1
+a    <- 1
+b    <- 3
+Var_comb <- (a^2) * VarX + (b^2) * VarY + 2 * a * b * Cov
+Var_comb                               # Output: 53.00
+
+
+#### ===== 4. Conditional Expectation (Questions 20-22) =====
+
+#### Question 20:
+#### Among the observations with X = x, the Y values are 8, 5, 0, 11. 
+#### Find E[Y | X = x] (the subgroup average). (round to the hundredths) [5]
+y_subgroup <- c(8, 5, 0, 11)           # Y values where X = x
+E_Y_cond   <- mean(y_subgroup)         # average of subgroup Y values [10]
+E_Y_cond                               # Output: 6.00
+
+
+#### Question 21:
+#### Given X = x, Y takes values 7, 5, 5 with probabilities 0.2, 0.3, 0.5. 
+#### Find E[Y | X = x]. (round to the hundredths) [5]
+yj       <- c(7, 5, 5)                 # Y values given X = x
+pj       <- c(0.2, 0.3, 0.5)           # conditional probabilities
+E_Y_cond <- sum(yj * pj)               # sum of weighted values [8]
+round(E_Y_cond, 2)                     # Output: 5.40
+
+
+#### Question 22:
+#### Conditional expectation is also linear: E[aY + b | X = x] = a E[Y | X = x] + b. 
+#### Given E[Y | X = x] = 8, a = 3, b = 4, find E[aY + b | X = x]. (round to the hundredths) [5]
+E_Y_cond    <- 8
+a           <- 3
+b           <- 4
+E_aY_b_cond <- a * E_Y_cond + b        # E[3Y + 4 | X = x] = 3*(8) + 4
+E_aY_b_cond                            # Output: 28.00
