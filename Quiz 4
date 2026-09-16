@@ -54,3 +54,128 @@ p = c(1/3,1/3,1/3)
 
 (x * p) + (y * p)
 sum((x * p) + (y * p))
+
+#### ==================================================================
+#### ECON 377 - Problem Set 4 (Questions 8 - 22)
+#### Standardized Solutions following ECON 377 Starter Coding Format
+#### ==================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### ===== 1. Linearity of Expectation (Questions 8-10) =====
+
+#### Question 8: E[aX + b] = a*E[X] + b
+EX <- 1
+a  <- 6
+b  <- 3
+E_aX_b <- a * EX + b                   # E[6X + 3] = 6*(1) + 3
+E_aX_b                                 # Output: 9
+
+#### Question 9: E[aX + bY] = a*E[X] + b*E[Y]
+EX <- 8
+EY <- 3
+a  <- 5
+b  <- 2
+E_aX_bY <- a * EX + b * EY             # E[5X + 2Y] = 5*(8) + 2*(3)
+E_aX_bY                                # Output: 46
+
+#### Question 10: E[aX + bY - c] = a*E[X] + b*E[Y] - c
+EX    <- 4
+EY    <- 7
+a     <- 4
+b     <- 3
+c_val <- 7
+E_comb <- a * EX + b * EY - c_val      # E[4X + 3Y - 7] = 4*(4) + 3*(7) - 7
+E_comb                                 # Output: 30
+
+
+#### ===== 2. Variance & Standard Deviation (Questions 11-14) =====
+
+#### Question 11: Var(X) = E[X^2] - (E[X])^2
+EX   <- 6
+EX2  <- 53
+VarX <- EX2 - EX^2                    # Var(X) = 53 - 6^2
+VarX                                  # Output: 17
+
+#### Question 12: Var(aX + b) = a^2 * Var(X)
+VarX <- 6
+a    <- 3
+Var_aX_b <- (a^2) * VarX              # Var(3X + b) = 3^2 * 6
+Var_aX_b                              # Output: 54
+
+#### Question 13: sd(X) = sqrt(Var(X))
+VarX <- 10
+sdX  <- sqrt(VarX)                    # sd(X) = sqrt(10)
+round(sdX, 2)                         # Output: 3.16
+
+#### Question 14: Var(X + Y) = Var(X) + Var(Y) when independent
+VarX <- 1
+VarY <- 6
+Var_sum <- VarX + VarY                 # Var(X + Y) = 1 + 6
+Var_sum                                # Output: 7
+
+
+#### ===== 3. Covariance & Correlation (Questions 15-19) =====
+
+#### Question 15: Cov(X,Y) = E[XY] - E[X]*E[Y]
+EXY <- 27
+EX  <- 6
+EY  <- 3
+Cov <- EXY - EX * EY                  # Cov(X,Y) = 27 - (6*3)
+Cov                                   # Output: 9
+
+#### Question 16: Population covariance from joint probability table
+#### Paired values (3,1), (2,1), (5,1), each with probability 1/3
+xj  <- c(3, 2, 5)                      # x values for pairs
+yj  <- c(1, 1, 1)                      # y values for pairs
+pj  <- c(1/3, 1/3, 1/3)                # probabilities for each pair
+EX  <- sum(xj * pj)                    # E[X]   = sum(xj * pj)
+EY  <- sum(yj * pj)                    # E[Y]   = sum(yj * pj)
+EXY <- sum(xj * yj * pj)               # E[XY]  = sum(xj * yj * pj)
+Cov <- EXY - EX * EY                   # Cov(X,Y) = E[XY] - E[X]*E[Y]
+Cov                                    # Output: 0
+
+#### Question 17: Cov(a1*X + b1, a2*Y + b2) = a1*a2*Cov(X,Y)
+Cov <- -1
+a1  <- 5
+a2  <- 3
+Cov_trans <- a1 * a2 * Cov             # Cov(5X+b1, 3Y+b2) = 5*3*(-1)
+Cov_trans                              # Output: -15
+
+#### Question 18: Cor(X,Y) = Cov(X,Y) / (sd(X) * sd(Y))
+Cov <- -2
+sdX <- 3
+sdY <- 4
+Cor <- Cov / (sdX * sdY)              # Cor = -2 / (3 * 4)
+round(Cor, 2)                         # Output: -0.17
+
+#### Question 19: Var(aX + bY) = a^2*Var(X) + b^2*Var(Y) + 2ab*Cov(X,Y)
+VarX <- 5
+VarY <- 6
+Cov  <- -1
+a    <- 1
+b    <- 3
+Var_comb <- (a^2) * VarX + (b^2) * VarY + 2 * a * b * Cov
+Var_comb                               # Output: 53
+
+
+#### ===== 4. Conditional Expectation (Questions 20-22) =====
+
+#### Question 20: E[Y | X = x] = subgroup average of Y
+y_subgroup <- c(8, 5, 0, 11)           # Y values where X = x
+E_Y_cond   <- mean(y_subgroup)         # average of those Y values
+E_Y_cond                               # Output: 6
+
+#### Question 21: Discrete conditional mean E[Y | X = x] = sum(yj * pj)
+yj       <- c(7, 5, 5)                 # Y values given X = x
+pj       <- c(0.2, 0.3, 0.5)           # conditional probabilities
+E_Y_cond <- sum(yj * pj)               # sum of weighted values
+round(E_Y_cond, 2)                     # Output: 5.4
+
+#### Question 22: Linearity of conditional expectation E[aY + b | X = x]
+E_Y_cond    <- 8
+a           <- 3
+b           <- 4
+E_aY_b_cond <- a * E_Y_cond + b        # E[3Y + 4 | X = x] = 3*(8) + 4
+E_aY_b_cond                            # Output: 28
