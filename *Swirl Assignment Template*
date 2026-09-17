@@ -1,0 +1,21 @@
+#Swirl Lesson ______ Gus McLellan
+
+install.packages('swirl')
+
+library(swirl) # Do once everytime you start session
+
+install_course_github('isaaccloh', '377_swirl')
+
+#starting up swirl 
+
+swirl()
+Macg
+
+#Continuing to Lesson
+1
+
+#select course
+1
+
+#select lesson
+______
