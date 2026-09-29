@@ -1,0 +1,131 @@
+# Question ___
+# In OLS, the fitted value \hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_i is:
+# Correct Answer: The model's PREDICTION of Y at X_i
+
+# Question ___
+# The OLS residual \hat{U}_i equals:
+# Correct Answer: Y_i - \hat{Y}_i (actual minus fitted)
+
+# Question ___
+# A POSITIVE residual (\hat{U}_i > 0) means OLS:
+# Correct Answer: Under-predicted Y_i (actual > fitted)
+
+# Question ___
+# R^2 is:
+# Correct Answer: The fraction of the sample variation in Y explained by X
+
+# Question ___
+# The total sum of squares decomposes as SST =:
+# Correct Answer: SSE + SSR
+
+# Question ___
+# The sum of the OLS residuals \sum_i \hat{U}_i is always:
+# Correct Answer: 0
+
+# Question ___
+# An R^2 close to 0 means:
+# Correct Answer: The OLS line explains little of the variation in Y --- common, and not necessarily a bad model
+
+# Question ___
+# The point (\bar{X}, \bar{Y}):
+# Correct Answer: Always lies on the OLS regression line
+
+#----------------------------------------------------------------------------------------------------------------------
+
+rm(list = ls()) # Clear workspace memory
+
+# Question ___
+# For x = (1, 6, 6), y = (8, 2, 6), find OLS slope beta1_hat.
+x <- c(1, 6, 6)
+y <- c(8, 2, 6)
+fit9 <- lm(y ~ x)
+beta1_hat <- coef(fit9)[2]
+round(beta1_hat, 2)
+
+# Question ___
+# For x = (5, 8, 1), y = (12, 9, 0), find OLS intercept beta0_hat.
+x <- c(5, 8, 1)
+y <- c(12, 9, 0)
+fit10 <- lm(y ~ x)
+beta0_hat <- coef(fit10)[1]
+round(beta0_hat, 2)
+
+# Question ___
+# For x = (8, 3, 4), y = (1, 8, 7), fit OLS line and predict y_hat at x = 3.
+x <- c(8, 3, 4)
+y <- c(1, 8, 7)
+fit11 <- lm(y ~ x)
+y_hat_at_3 <- predict(fit11, newdata = data.frame(x = 3))
+round(y_hat_at_3, 2)
+
+# Question ___
+# A fitted line is y_hat = 7 + (9/10)x. Find y_hat at x = 9.
+b0 <- 7
+b1 <- 9/10
+x_val <- 9
+y_hat <- b0 + b1 * x_val
+round(y_hat, 2)
+
+# Question ___
+# A fitted line is y_hat = -2 + (7/10)x. Actual x = 8, y = 20. Find u_hat = y - y_hat.
+b0 <- -2
+b1 <- 7/10
+x_val <- 8
+y_actual <- 20
+y_hat <- b0 + b1 * x_val
+u_hat <- y_actual - y_hat
+round(u_hat, 2)
+
+# Question ___
+# A fitted slope is beta1_hat = 6/10. Find predicted change in y when x rises by 6.
+beta1_hat <- 6/10
+delta_x <- 6
+delta_y_hat <- beta1_hat * delta_x
+round(delta_y_hat, 2)
+
+# Question ___
+# For fitted line y_hat = 0 + (5/10)x and points (5,11), (3,10), (10,9), find SSR.
+b0 <- 0
+b1 <- 5/10
+x_pts <- c(5, 3, 10)
+y_pts <- c(11, 10, 9)
+y_hat_pts <- b0 + b1 * x_pts
+u_pts <- y_pts - y_hat_pts
+SSR <- sum(u_pts^2)
+round(SSR, 2)
+
+# Question ___
+# SST = 323, SSR = 150. Find SSE.
+SST <- 323
+SSR <- 150
+SSE <- SST - SSR
+round(SSE, 2)
+
+# Question ___
+# SST = 276, SSR = 34. Find R^2.
+SST <- 276
+SSR <- 34
+SSE <- SST - SSR
+R2 <- SSE / SST
+round(R2, 2)
+
+# Question ___
+# SSE = 40, SST = 264. Find R^2.
+SSE <- 40
+SST <- 264
+R2 <- SSE / SST
+round(R2, 2)
+
+# Question ___
+# SST = 376, SSR = 88. Find fraction of variation UNEXPLAINED.
+SST <- 376
+SSR <- 88
+unexplained_frac <- SSR / SST
+round(unexplained_frac, 2)
+
+# Question ___
+# SST = 345, R^2 = 37/100. Find SSR.
+SST <- 345
+R2 <- 37/100
+SSR <- SST * (1 - R2)
+round(SSR, 2)
