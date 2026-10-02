@@ -73,7 +73,7 @@ colnames(my_data) <- cnames
 
 my_data
 
-#Yes I would like to submit a log of this lesson to Google Forms so that my instructor may evaluate my progress?
+#Yes I would like to submit a log of this lesson to Google Forms so that my instructor may evaluate my progress.
 1
 
 #Take me to ECN 377
