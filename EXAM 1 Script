@@ -1,0 +1,145 @@
+#### ==================================================================
+#### ECON 377 - PROBLEM SET 1 (Questions 1 - 10)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### ==================================================================
+
+#### Question 1:[cite: 1]
+#### Econometrics combines data, economics, and which of the following?[cite: 1]
+#### Concept: Econometrics is the integration of economic theory, data, and statistical methods.
+#### Correct Answer: Statistics[cite: 1]
+
+
+#### Question 2:[cite: 1]
+#### Ice-cream sales and drownings both rise in the summer, so they are positively correlated. What is the best explanation?[cite: 1]
+#### Concept: Hot summer weather is an omitted confounding factor driving increases in both swimming and ice-cream consumption.
+#### Correct Answer: A confounding variable (summer) drives both[cite: 1]
+
+
+#### Question 3:[cite: 2]
+#### In economics, "ceteris paribus" means:[cite: 2]
+#### Concept: Latin phrase translated as "all other things being equal" or holding other variables constant.
+#### Correct Answer: Holding all other factors fixed[cite: 2]
+
+
+#### Question 4:[cite: 2]
+#### True or False: a strong correlation between education and wages proves that more education causes higher wages.[cite: 2]
+#### Concept: Correlation does not imply causation due to potential confounding factors (e.g., innate ability).
+#### Correct Answer: False[cite: 2]
+
+
+#### Question 5:[cite: 2]
+#### What type of data is this: the U.S. unemployment rate recorded each year from 2000 to 2024?[cite: 2]
+#### Concept: A single entity tracked sequentially across multiple points in time is a time series.
+#### Correct Answer: Time series[cite: 2]
+
+
+#### Question 6:[cite: 2]
+#### What type of data is this: wages and years of education for 526 workers, all measured in 1976?[cite: 2]
+#### Concept: Multiple observational units sampled at a single point in time form a cross-section.
+#### Correct Answer: Cross-section[cite: 2]
+
+
+#### Question 7:[cite: 3]
+#### What type of data is this: GDP for all 50 states, recorded every year from 2015 to 2020?[cite: 3]
+#### Concept: Data following multiple individual cross-sectional entities over multiple time periods is a panel (longitudinal) dataset.
+#### Correct Answer: Panel[cite: 3]
+
+
+#### Question 8:[cite: 3]
+#### The whole group we care about, but usually cannot fully observe, is called the (one word)[cite: 3]
+#### Concept: The target group representing the entire collection of units of interest.
+#### Correct Answer: Population[cite: 3]
+
+
+#### Question 9:[cite: 3]
+#### The part of that group we actually collect data on is called the (one word)[cite: 3]
+#### Concept: An observed subset selected from the larger population.
+#### Correct Answer: Sample[cite: 3]
+
+
+#### Question 10:[cite: 3]
+#### True or False: we use the sample we have in order to learn about the larger population we care about.[cite: 3]
+#### Concept: Statistical inference uses sample estimates to draw conclusions about population parameters.
+#### Correct Answer: True[cite: 3]
+
+
+#### ==================================================================
+#### ECON 377 - Problem Set 1 (Questions 11 - 21)
+#### Applied Calculations, R Foundations, & Question Code
+#### ==================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 11:[cite: 3]
+#### The three numbers 1, 6, and 7 add up to what total?[cite: 3]
+vals_11 <- c(1, 6, 7)
+total_11 <- sum(vals_11)
+total_11                               # Output: 14[cite: 4]
+
+
+#### Question 12:[cite: 4]
+#### What is the mean (average) of these four numbers: 4, 8, 6, and 2?[cite: 4]
+vals_12 <- c(4, 8, 6, 2)
+mean_12 <- mean(vals_12)
+mean_12                                # Output: 5[cite: 4]
+
+
+#### Question 13:[cite: 4]
+#### A set of 12 numbers adds up to 240. What is their mean (average)?[cite: 4]
+sum_13 <- 240
+n_13   <- 12
+mean_13 <- sum_13 / n_13
+mean_13                                # Output: 20[cite: 4]
+
+
+#### Question 14:[cite: 4]
+#### True or False: in R, mean(x) gives the same result as sum(x)/length(x).[cite: 4]
+#### Concept: By definition, the arithmetic sample mean is the sum of observations divided by the sample size.
+# Example verification in R:
+x_test <- c(2, 4, 6, 8)
+identical(mean(x_test), sum(x_test) / length(x_test))
+#### Correct Answer: True[cite: 4]
+
+
+#### Question 15:[cite: 4]
+#### In the R expression wage1$wage, what does the $ do?[cite: 4]
+#### Concept: In R, the '$' operator extracts a specific column/variable from a data frame.
+#### Correct Answer: Pulls the variable "wage" out of the dataset "wage1"[cite: 4]
+
+
+#### Question 16:[cite: 4, 5]
+#### Which R command gives a quick snapshot (minimum, mean, maximum, and so on) of every variable in a dataset?[cite: 5]
+#### Concept: summary() outputs 5-number summaries plus means across all columns in a data frame.
+#### Correct Answer: summary()[cite: 5]
+
+
+#### Question 17:[cite: 5]
+#### Complete the course's rule for using AI: "AI writes, you _____." (one word)[cite: 5]
+#### Concept: Human verification is required when generating technical/analytical work with AI assistance.
+#### Correct Answer: Verify[cite: 5]
+
+
+#### Question 18:[cite: 5]
+#### Which of the following compute the mean of a numeric vector x in R? (Select all that apply.)[cite: 5]
+#### Concept: Both the built-in mean() function and manual calculation via sum()/length() compute the arithmetic mean.
+#### Correct Answer: mean(x) and sum(x)/length(x)[cite: 5]
+
+
+#### Question 19:[cite: 5]
+#### Which statement is correct?[cite: 5]
+#### Concept: Correlation describes linear association; causation describes the effect of intervening on an explanatory variable.
+#### Correct Answer: Correlation means two variables move together; causation means changing one changes the other.[cite: 5]
+
+
+#### Question 20:[cite: 5]
+#### In R, which set of commands describes a variable's center, spread, and shape (in that order)?[cite: 5]
+#### Concept: mean() captures central tendency, sd() captures dispersion/spread, and hist() displays distribution shape.
+#### Correct Answer: mean(), sd(), hist()[cite: 6]
+
+
+#### Question 21:[cite: 6]
+#### (Ungraded, for reflection) Which best describes how you used AI while preparing for this assignment?[cite: 6]
+#### Preferred Practice Answer: I used AI to explain ideas or check my work, then made sure I understood it myself (a complement to my learning).[cite: 6]
+
+
