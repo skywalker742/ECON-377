@@ -1,0 +1,43 @@
+install.packages('wooldridge')
+
+library(wooldridge)
+
+nrow(wage1)
+
+mean(wage1$wage)
+
+
+sd(wage1$educ)
+
+
+reg = lm(wage ~ educ, data = wage1)
+b1 = reg$coefficients[2]
+b1
+
+b0 = reg$coefficients[1]
+b0
+
+b0 + b1 * 14
+
+b1 * 2
+
+
+SSR = sum(reg$residuals^2)
+
+SSR
+
+
+SST <- sum((wage1$wage - mean(wage1$wage))^2)
+R2 = 1 - SSR/SST
+R2
+summary(reg)$r.squared
+
+
+reg2 = lm(bwght ~ cigs, data = bwght)
+b1_bwght = coefficients(reg2)[2]
+delta_bwght = b1_bwght * 5
+delta_bwght
+round(delta_bwght, 2)
+
+wage1$wage[wage1$educ == 16]
+mean(wage1$wage[wage1$educ == 16])
