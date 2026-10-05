@@ -316,3 +316,904 @@ round(cov_20, 2)                        # Output: -1.50
 #### =================================================================================================================
 #### =================================================================================================================
 
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 3 (Questions 1 - 7)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### =================================================================================================================
+
+#### Question 1:
+#### The SAMPLE variance divides the sum of squared deviations from the mean by:
+#### Concept: Dividing by n - 1 (degrees of freedom) provides an unbiased estimator of the population variance.
+#### Correct Answer: n - 1
+
+
+#### Question 2:
+#### Which R command computes the SAMPLE variance of a numeric vector x?
+#### Concept: var() computes the sample variance in R.
+#### Correct Answer: var(x)
+
+
+#### Question 3:
+#### Which R command computes the correlation between numeric vectors x and y?
+#### Concept: cor() calculates the sample correlation coefficient between two numeric vectors.
+#### Correct Answer: cor(x, y)
+
+
+#### Question 4:
+#### The correlation between two variables is always:
+#### Concept: Correlation is normalized by standard deviations and strictly bounded between -1 and 1.
+#### Correct Answer: Between -1 and 1
+
+
+#### Question 5:
+#### For a discrete random variable X, the expected value E[X] equals:
+#### Concept: Expected value of a discrete random variable is the probability-weighted sum of its possible values: sum(x * P(X = x)).
+#### Correct Answer: The sum of each value times its probability
+
+
+#### Question 6:
+#### For a discrete random variable X, E[X^2] equals:
+#### Concept: By the law of the unconscious statistician, E[g(X)] = sum(g(x) * P(X = x)), so E[X^2] sums each squared value times its probability.
+#### Correct Answer: The sum of each SQUARED value times its probability
+
+
+#### Question 7:
+#### True or False: in R, sd(x) gives the SAMPLE standard deviation (dividing by n - 1).
+#### Concept: In R, sd() computes the sample standard deviation using Bessel's correction (denominator n - 1).
+#### Correct Answer: True
+
+
+#### =================================================================================================================
+#### ECON 377 - Problem Set 3 (Questions 8 - 21)
+#### Applied Calculations, R Foundations, & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 8:
+#### The sample mean is x_bar = (1/n) * sum x_i. Find x_bar for x = (10, 11, 5). (round to the hundredths)
+x_8 <- c(10, 11, 5)
+mean_8 <- mean(x_8)
+round(mean_8, 2)                        # Output: 8.67
+
+
+#### Question 9:
+#### The sample variance is S_x^2 = (1/(n-1)) * sum(x_i - x_bar)^2. Compute it for x = (3, 8, 8). (round to the hundredths)
+x_9 <- c(3, 8, 8)
+var_9 <- var(x_9)
+round(var_9, 2)                         # Output: 8.33
+
+
+#### Question 10:
+#### The sample standard deviation is S_x = sqrt(S_x^2). Compute it for x = (3, 4, 9). (round to the hundredths)
+x_10 <- c(3, 4, 9)
+sd_10 <- sd(x_10)
+round(sd_10, 2)                         # Output: 3.21
+
+
+#### Question 11:
+#### The sample covariance is S_xy = (1/(n-1)) * sum((x_i - x_bar) * (y_i - y_bar)). Compute it for x = (1, 0, 2), y = (1, 0, 5). (round to the hundredths)
+x_11 <- c(1, 0, 2)
+y_11 <- c(1, 0, 5)
+cov_11 <- cov(x_11, y_11)
+round(cov_11, 2)                        # Output: 2.50
+
+
+#### Question 12:
+#### Sample correlation is rho = S_xy / (S_x * S_y). With S_xy = 3, S_x = 2, S_y = 2, find rho. (round to the hundredths)
+S_xy_12 <- 3
+S_x_12  <- 2
+S_y_12  <- 2
+rho_12  <- S_xy_12 / (S_x_12 * S_y_12)
+round(rho_12, 2)                        # Output: 0.75
+
+
+#### Question 13:
+#### Compute the sample correlation rho = S_xy / (S_x * S_y) directly from the data x = (3, 4, 7), y = (3, 6, 7). (In R: cor(x, y). Round to the hundredths)
+x_13 <- c(3, 4, 7)
+y_13 <- c(3, 6, 7)
+rho_13 <- cor(x_13, y_13)
+round(rho_13, 2)                        # Output: 0.85
+
+
+#### Question 14:
+#### A fair coin gives value 10 on heads and 2 on tails (each with probability 1/2). Find E[X]. (round to the hundredths)
+x_14 <- c(10, 2)
+p_14 <- c(1/2, 1/2)
+EX_14 <- sum(x_14 * p_14)
+round(EX_14, 2)                         # Output: 6.00
+
+
+#### Question 15:
+#### For the fair coin with values 2 (heads) and 1 (tails), find E[X^2]. (round to the hundredths)
+x_15 <- c(2, 1)
+p_15 <- c(1/2, 1/2)
+EX2_15 <- sum((x_15^2) * p_15)
+round(EX2_15, 2)                        # Output: 2.50
+
+
+#### Question 16:
+#### A random variable X takes the values 6, 5, 0, each with probability 1/3. Find E[X]. (round to the hundredths)
+x_16 <- c(6, 5, 0)
+p_16 <- c(1/3, 1/3, 1/3)
+EX_16 <- sum(x_16 * p_16)
+round(EX_16, 2)                         # Output: 3.67
+
+
+#### Question 17:
+#### For X taking values 0, 8, 9, each with probability 1/3, find E[X^2]. (round to the hundredths)
+x_17 <- c(0, 8, 9)
+p_17 <- c(1/3, 1/3, 1/3)
+EX2_17 <- sum((x_17^2) * p_17)
+round(EX2_17, 2)                        # Output: 48.33
+
+
+#### Question 18:
+#### A random variable X equals 3 with probability 2/10, and equals 10 with probability (10-2)/10. Find E[X]. (round to the hundredths)
+x_18 <- c(3, 10)
+p_18 <- c(2/10, 8/10)
+EX_18 <- sum(x_18 * p_18)
+round(EX_18, 2)                         # Output: 8.60
+
+
+#### Question 19:
+#### For the same X -- value 8 with probability 1/10, value 2 with probability (10-1)/10 -- find E[X^2]. (round to the hundredths)
+x_19 <- c(8, 2)
+p_19 <- c(1/10, 9/10)
+EX2_19 <- sum((x_19^2) * p_19)
+round(EX2_19, 2)                        # Output: 10.00
+
+
+#### Question 20:
+#### A random variable X takes values 9, 2, 6 with probabilities 0.2, 0.5, 0.3. Find E[X]. (round to the hundredths)
+x_20 <- c(9, 2, 6)
+p_20 <- c(0.2, 0.5, 0.3)
+EX_20 <- sum(x_20 * p_20)
+round(EX_20, 2)                         # Output: 4.60
+
+
+#### Question 21:
+#### For X taking values 2, 6, 6 with probabilities 0.2, 0.5, 0.3, find E[X^2]. (round to the hundredths)
+x_21 <- c(2, 6, 6)
+p_21 <- c(0.2, 0.5, 0.3)
+EX2_21 <- sum((x_21^2) * p_21)
+round(EX2_21, 2)                        # Output: 29.60
+
+#### =================================================================================================================
+#### =================================================================================================================
+
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 4 (Questions 1 - 7)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### =================================================================================================================
+
+#### Question 1:
+#### For any constant c, the expected value E[c] equals:
+#### Concept: E[c] = c (The expected value of a constant is the constant itself).
+#### Correct Answer: c
+
+
+#### Question 2:
+#### If X and Y are independent, then Cov(X, Y) equals:
+#### Concept: Independence implies zero linear relationship, so Cov(X, Y) = 0.
+#### Correct Answer: 0
+
+
+#### Question 3:
+#### The correlation Cor(X, Y) always lies:
+#### Concept: Correlation is normalized by standard deviations and strictly bounded between -1 and 1.
+#### Correct Answer: Between -1 and 1
+
+
+#### Question 4:
+#### The variance of a random variable X equals:
+#### Concept: Standard variance formula is Var(X) = E[X^2] - (E[X])^2.
+#### Correct Answer: E[X^2] - (E[X])^2
+
+
+#### Question 5:
+#### Compared with the covariance, the correlation is:
+#### Concept: Standard deviation scaling removes units, making correlation unitless and bounded between -1 and 1.
+#### Correct Answer: Unitless and always between -1 and 1
+
+
+#### Question 6:
+#### E[Y | X = x] is best described as:
+#### Concept: Conditional expectation evaluates the mean of Y restricted to the subgroup where X = x.
+#### Correct Answer: The average of Y among observations with X = x
+
+
+#### Question 7:
+#### If X and Y are independent, then Var(X + Y) equals:
+#### Concept: Var(X + Y) = Var(X) + Var(Y) + 2 Cov(X, Y); when independent, Cov(X, Y) = 0.
+#### Correct Answer: Var(X) + Var(Y)
+
+
+#### =================================================================================================================
+#### ECON 377 - Problem Set 4 (Questions 8 - 22)
+#### Applied Calculations, R Foundations, & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 8:
+#### Expectation is linear: E[aX + b] = a E[X] + b.
+#### Given E[X] = 1, a = 6, and b = 3, find E[aX + b]. (round to the hundredths)
+EX_8 <- 1
+a_8  <- 6
+b_8  <- 3
+E_aX_b_8 <- a_8 * EX_8 + b_8            # E[6X + 3] = 6*(1) + 3
+round(E_aX_b_8, 2)                      # Output: 9.00
+
+
+#### Question 9:
+#### Given E[X] = 8, E[Y] = 3, a = 5, and b = 2,
+#### find E[aX + bY] = a E[X] + b E[Y]. (round to the hundredths)
+EX_9 <- 8
+EY_9 <- 3
+a_9  <- 5
+b_9  <- 2
+E_aX_bY_9 <- a_9 * EX_9 + b_9 * EY_9    # E[5X + 2Y] = 5*(8) + 2*(3)
+round(E_aX_bY_9, 2)                     # Output: 46.00
+
+
+#### Question 10:
+#### Given E[X] = 4, E[Y] = 7,
+#### find E[aX + bY - c] = a E[X] + b E[Y] - c with a = 4, b = 3, c = 7. (round to the hundredths)
+EX_10 <- 4
+EY_10 <- 7
+a_10  <- 4
+b_10  <- 3
+c_10  <- 7
+E_comb_10 <- a_10 * EX_10 + b_10 * EY_10 - c_10  # E[4X + 3Y - 7] = 4*(4) + 3*(7) - 7
+round(E_comb_10, 2)                     # Output: 30.00
+
+
+#### Question 11:
+#### Given E[X] = 6 and E[X^2] = 53,
+#### find Var(X) = E[X^2] - (E[X])^2. (round to the hundredths)
+EX_11  <- 6
+EX2_11 <- 53
+VarX_11 <- EX2_11 - (EX_11^2)           # Var(X) = 53 - 6^2
+round(VarX_11, 2)                       # Output: 17.00
+
+
+#### Question 12:
+#### A variance property: Var(aX + b) = a^2 Var(X).
+#### Given Var(X) = 6 and a = 3, find Var(aX + b). (round to the hundredths)
+VarX_12 <- 6
+a_12    <- 3
+Var_aX_b_12 <- (a_12^2) * VarX_12       # Var(3X + b) = 3^2 * 6
+round(Var_aX_b_12, 2)                   # Output: 54.00
+
+
+#### Question 13:
+#### The standard deviation is sd(X) = sqrt(Var(X)).
+#### Given Var(X) = 10, find sd(X). (round to the hundredths)
+VarX_13 <- 10
+sdX_13  <- sqrt(VarX_13)                # sd(X) = sqrt(10)
+round(sdX_13, 2)                        # Output: 3.16
+
+
+#### Question 14:
+#### If X and Y are independent, Var(X + Y) = Var(X) + Var(Y).
+#### Given Var(X) = 1 and Var(Y) = 6, find Var(X + Y). (round to the hundredths)
+VarX_14 <- 1
+VarY_14 <- 6
+Var_sum_14 <- VarX_14 + VarY_14         # Var(X + Y) = 1 + 6
+round(Var_sum_14, 2)                    # Output: 7.00
+
+
+#### Question 15:
+#### Covariance is Cov(X, Y) = E[XY] - E[X] E[Y].
+#### Given E[XY] = 27, E[X] = 6, E[Y] = 3, find Cov(X, Y). (round to the hundredths)
+EXY_15 <- 27
+EX_15  <- 6
+EY_15  <- 3
+Cov_15 <- EXY_15 - EX_15 * EY_15        # Cov(X, Y) = 27 - (6*3)
+round(Cov_15, 2)                        # Output: 9.00
+
+
+#### Question 16:
+#### X and Y take the paired values (3, 1), (2, 1), (5, 1), each pair equally likely (probability 1/3).
+#### Find Cov(X, Y) = E[XY] - E[X] E[Y]. (round to the hundredths)
+xj_16  <- c(3, 2, 5)
+yj_16  <- c(1, 1, 1)
+pj_16  <- c(1/3, 1/3, 1/3)
+EX_16  <- sum(xj_16 * pj_16)
+EY_16  <- sum(yj_16 * pj_16)
+EXY_16 <- sum(xj_16 * yj_16 * pj_16)
+Cov_16 <- EXY_16 - EX_16 * EY_16        # Cov(X, Y) = E[XY] - E[X]*E[Y]
+round(Cov_16, 2)                        # Output: 0.00
+
+
+#### Question 17:
+#### A covariance property: Cov(a1 X + b1, a2 Y + b2) = a1 a2 Cov(X, Y).
+#### Given Cov(X, Y) = -1, a1 = 5, a2 = 3 (and any constants b1, b2),
+#### find Cov(a1 X + b1, a2 Y + b2). (round to the hundredths)
+Cov_17 <- -1
+a1_17  <- 5
+a2_17  <- 3
+Cov_trans_17 <- a1_17 * a2_17 * Cov_17  # Cov(5X + b1, 3Y + b2) = 5*3*(-1)
+round(Cov_trans_17, 2)                  # Output: -15.00
+
+
+#### Question 18:
+#### Correlation is Cor(X, Y) = Cov(X, Y) / (sd(X) sd(Y)).
+#### Given Cov(X, Y) = -2, sd(X) = 3, sd(Y) = 4, find Cor(X, Y). (round to the hundredths)
+Cov_18 <- -2
+sdX_18 <- 3
+sdY_18 <- 4
+Cor_18 <- Cov_18 / (sdX_18 * sdY_18)    # Cor = -2 / (3 * 4)
+round(Cor_18, 2)                        # Output: -0.17
+
+
+#### Question 19:
+#### Variance and covariance combine as Var(aX + bY) = a^2 Var(X) + b^2 Var(Y) + 2ab Cov(X, Y).
+#### Given Var(X) = 5, Var(Y) = 6, Cov(X, Y) = -1, a = 1, b = 3, find Var(aX + bY). (round to the hundredths)
+VarX_19 <- 5
+VarY_19 <- 6
+Cov_19  <- -1
+a_19    <- 1
+b_19    <- 3
+Var_comb_19 <- (a_19^2) * VarX_19 + (b_19^2) * VarY_19 + 2 * a_19 * b_19 * Cov_19
+round(Var_comb_19, 2)                   # Output: 53.00
+
+
+#### Question 20:
+#### Among the observations with X = x, the Y values are 8, 5, 0, 11.
+#### Find E[Y | X = x] (the subgroup average). (round to the hundredths)
+y_subgroup_20 <- c(8, 5, 0, 11)
+E_Y_cond_20   <- mean(y_subgroup_20)
+round(E_Y_cond_20, 2)                   # Output: 6.00
+
+
+#### Question 21:
+#### Given X = x, Y takes values 7, 5, 5 with probabilities 0.2, 0.3, 0.5.
+#### Find E[Y | X = x]. (round to the hundredths)
+yj_21        <- c(7, 5, 5)
+pj_21        <- c(0.2, 0.3, 0.5)
+E_Y_cond_21  <- sum(yj_21 * pj_21)
+round(E_Y_cond_21, 2)                   # Output: 5.40
+
+
+#### Question 22:
+#### Conditional expectation is also linear: E[aY + b | X = x] = a E[Y | X = x] + b.
+#### Given E[Y | X = x] = 8, a = 3, b = 4, find E[aY + b | X = x]. (round to the hundredths)
+E_Y_cond_22    <- 8
+a_22           <- 3
+b_22           <- 4
+E_aY_b_cond_22 <- a_22 * E_Y_cond_22 + b_22  # E[3Y + 4 | X = x] = 3*(8) + 4
+round(E_aY_b_cond_22, 2)                # Output: 28.00
+
+#### =================================================================================================================
+#### =================================================================================================================
+
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 5 (Questions 1 - 8)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### =================================================================================================================
+
+#### Question 1:
+#### In the simple linear regression model Y = beta_0 + beta_1 * X + U the DEPENDENT variable is:
+#### Concept: In the regression framework, Y is the response (dependent) variable being explained by X.
+#### Correct Answer: Y
+
+
+#### Question 2:
+#### In Y = beta_0 + beta_1 * X + U the error term U represents:
+#### Concept: The error term captures all unobserved factors besides X that influence Y.
+#### Correct Answer: Factors OTHER than X that affect Y
+
+
+#### Question 3:
+#### In Y = beta_0 + beta_1 * X + U, the slope beta_1 measures:
+#### Concept: Slope beta_1 represents the marginal change in Y per unit increase in X, ceteris paribus.
+#### Correct Answer: The ceteris paribus effect of X on Y (the change in Y per one-unit rise in X, holding other factors fixed)
+
+
+#### Question 4:
+#### The zero conditional mean assumption E[U|X] = 0 says:
+#### Concept: Exogeneity requires that the expectation of the unobserved factors does not vary across values of X.
+#### Correct Answer: The average of U does not depend on X
+
+
+#### Question 5:
+#### Under the SLR model with E[U|X] = 0 the conditional mean E[Y|X=x] equals:
+#### Concept: Taking expectations gives E[Y|X=x] = beta_0 + beta_1 * x + E[U|X=x] = beta_0 + beta_1 * x.
+#### Correct Answer: beta_0 + beta_1 * x
+
+
+#### Question 6:
+#### The OLS slope estimate beta_hat_1 can be written as:
+#### Concept: The analytical formula for the simple regression slope is the sample covariance divided by the sample variance of the regressor.
+#### Correct Answer: cov(x, y) / var(x)
+
+
+#### Question 7:
+#### We must ESTIMATE beta_0, beta_1 (rather than compute them exactly) because:
+#### Concept: Parameters describe the broader population distribution; we only observe a finite sample drawn from it.
+#### Correct Answer: They are population quantities; we observe only a sample
+
+
+#### Question 8:
+#### In Y = (beta_0 + beta_1 * X) + U the term beta_0 + beta_1 * X is:
+#### Concept: The deterministic component represents the conditional mean (systematic explained part) of Y.
+#### Correct Answer: The part of Y EXPLAINED by X (its conditional mean)
+
+
+#### =================================================================================================================
+#### ECON 377 - Problem Set 5 (Questions 9 - 20)
+#### Applied Calculations, R Foundations, & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 9:
+#### The OLS slope is beta_hat_1 = cov(x, y) / var(x).
+#### Given cov(x, y) = 9 and var(x) = 10, find beta_hat_1. (round to the hundredths)
+cov_xy_9  <- 9
+var_x_9   <- 10
+beta1_9   <- cov_xy_9 / var_x_9
+round(beta1_9, 2)                       # Output: 0.90
+
+
+#### Question 10:
+#### The OLS intercept is beta_hat_0 = y_bar - beta_hat_1 * x_bar.
+#### Given y_bar = 10, x_bar = 9, and slope beta_hat_1 = 2/10, find beta_hat_0. (round to the hundredths)
+y_bar_10 <- 10
+x_bar_10 <- 9
+beta1_10 <- 2 / 10
+beta0_10 <- y_bar_10 - beta1_10 * x_bar_10
+round(beta0_10, 2)                      # Output: 8.20
+
+
+#### Question 11:
+#### For the sample x = (1, 5, 2), y = (3, 3, 5) find the OLS slope
+#### beta_hat_1 = sum((x_i - x_bar) * (y_i - y_bar)) / sum((x_i - x_bar)^2). (round to the hundredths)
+x_11 <- c(1, 5, 2)
+y_11 <- c(3, 3, 5)
+fit_11 <- lm(y_11 ~ x_11)
+beta1_11 <- coef(fit_11)["x_11"]
+round(beta1_11, 2)                      # Output: -0.15
+
+
+#### Question 12:
+#### For that sample x = (6, 5, 4), y = (8, 8, 6), find the OLS intercept beta_hat_0 = y_bar - beta_hat_1 * x_bar. (round to the hundredths)
+x_12 <- c(6, 5, 4)
+y_12 <- c(8, 8, 6)
+fit_12 <- lm(y_12 ~ x_12)
+beta0_12 <- coef(fit_12)["(Intercept)"]
+round(beta0_12, 2)                      # Output: 2.33
+
+
+#### Question 13:
+#### A fitted regression line is y_hat = beta_hat_0 + beta_hat_1 * x.
+#### With beta_hat_0 = 8 and beta_hat_1 = 2/10, find the predicted y_hat at x = 8. (round to the hundredths)
+beta0_13 <- 8
+beta1_13 <- 2 / 10
+x_val_13 <- 8
+y_hat_13 <- beta0_13 + beta1_13 * x_val_13
+round(y_hat_13, 2)                      # Output: 9.60
+
+
+#### Question 14:
+#### For the sample x = (3, 4, 3), y = (8, 3, 6), fit the OLS line and predict y_hat at x = 8. (round to the hundredths)
+x_14 <- c(3, 4, 3)
+y_14 <- c(8, 3, 6)
+fit_14 <- lm(y_14 ~ x_14)
+y_hat_14 <- predict(fit_14, newdata = data.frame(x_14 = 8))
+round(unname(y_hat_14), 2)              # Output: -13.00
+
+
+#### Question 15:
+#### The notes' example is E[colGPA | hsGPA] = 12/10 + (6/10) * hsGPA.
+#### Find the expected colGPA at hsGPA = 33/10. (round to the hundredths)
+beta0_15 <- 12 / 10
+beta1_15 <- 6 / 10
+hsGPA_15 <- 33 / 10
+colGPA_15 <- beta0_15 + beta1_15 * hsGPA_15
+round(colGPA_15, 2)                     # Output: 3.18
+
+
+#### Question 16:
+#### In wage = beta_0 + beta_1 * educ + U the estimated slope is beta_hat_1 = 9/10.
+#### Ceteris paribus, if educ rises by 5 year(s), by how much does predicted wage change? (round to the hundredths)
+beta1_16    <- 9 / 10
+delta_educ  <- 5
+delta_wage  <- beta1_16 * delta_educ
+round(delta_wage, 2)                    # Output: 4.50
+
+
+#### Question 17:
+#### X and Y have the joint probability distribution:
+#### (x=2, y=3) prob 0.2; (x=0, y=0) prob 0.3; (x=5, y=1) prob 0.5.
+#### Find E[X]. (round to the hundredths)
+x_vals_17 <- c(2, 0, 5)
+p_vals_17 <- c(0.2, 0.3, 0.5)
+EX_17     <- sum(x_vals_17 * p_vals_17)
+round(EX_17, 2)                         # Output: 2.90
+
+
+#### Question 18:
+#### X and Y have the joint probability distribution:
+#### (x=0, y=8) prob 0.2; (x=5, y=3) prob 0.3; (x=4, y=4) prob 0.5.
+#### Find Cov(X, Y) = E[XY] - E[X] * E[Y]. (round to the hundredths)
+x_vals_18 <- c(0, 5, 4)
+y_vals_18 <- c(8, 3, 4)
+p_vals_18 <- c(0.2, 0.3, 0.5)
+EX_18     <- sum(x_vals_18 * p_vals_18)
+EY_18     <- sum(y_vals_18 * p_vals_18)
+EXY_18    <- sum(x_vals_18 * y_vals_18 * p_vals_18)
+cov_18    <- EXY_18 - EX_18 * EY_18
+round(cov_18, 2)                        # Output: -3.25
+
+
+#### Question 19:
+#### X and Y have the joint probability distribution:
+#### (x=2, y=0) prob 0.2; (x=3, y=3) prob 0.3; (x=4, y=0) prob 0.5.
+#### The population regression slope is beta_1 = Cov(X, Y) / Var(X). Find beta_1. (round to the hundredths)
+x_vals_19 <- c(2, 3, 4)
+y_vals_19 <- c(0, 3, 0)
+p_vals_19 <- c(0.2, 0.3, 0.5)
+EX_19     <- sum(x_vals_19 * p_vals_19)
+EY_19     <- sum(y_vals_19 * p_vals_19)
+EX2_19    <- sum((x_vals_19^2) * p_vals_19)
+VarX_19   <- EX2_19 - (EX_19^2)
+EXY_19    <- sum(x_vals_19 * y_vals_19 * p_vals_19)
+CovXY_19  <- EXY_19 - EX_19 * EY_19
+beta1_19  <- CovXY_19 / VarX_19
+round(beta1_19, 2)                      # Output: -0.44
+
+
+#### Question 20:
+#### Review (sample). For x = (1, 5, 1), y = (2, 4, 2), find the SAMPLE covariance
+#### S_xy = (1/(n-1)) * sum((x_i - x_bar) * (y_i - y_bar)). (round to the hundredths)
+x_20   <- c(1, 5, 1)
+y_20   <- c(2, 4, 2)
+cov_20 <- cov(x_20, y_20)
+round(cov_20, 2)                        # Output: 2.67
+
+#### =================================================================================================================
+#### =================================================================================================================
+
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 6 (Questions 1 - 8)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### =================================================================================================================
+
+#### Question 1:
+#### In OLS, the fitted value Y_hat_i = beta_hat_0 + beta_hat_1 * X_i is:
+#### Concept: The fitted value represents the OLS regression model's predicted conditional mean for Y at a given X_i.
+#### Correct Answer: The model's PREDICTION of Y at X_i
+
+
+#### Question 2:
+#### The OLS residual U_hat_i equals:
+#### Concept: By definition, residuals are the difference between actual observed values and fitted/predicted values: Y_i - Y_hat_i.
+#### Correct Answer: Y_i - Y_hat_i (actual minus fitted)
+
+
+#### Question 3:
+#### A POSITIVE residual (U_hat_i > 0) means OLS:
+#### Concept: When U_hat_i = Y_i - Y_hat_i > 0, actual Y_i is greater than predicted Y_hat_i, meaning the model under-predicted the observation.
+#### Correct Answer: Under-predicted Y_i (actual > fitted)
+
+
+#### Question 4:
+#### R^2 is:
+#### Concept: R^2 (the coefficient of determination) quantifies the proportion of sample variation in the dependent variable explained by the model.
+#### Correct Answer: The fraction of the sample variation in Y explained by X
+
+
+#### Question 5:
+#### The total sum of squares decomposes as SST =
+#### Concept: Total variation decomposes into explained variation and unexplained residual variation: SST = SSE + SSR.
+#### Correct Answer: SSE + SSR
+
+
+#### Question 6:
+#### The sum of the OLS residuals sum_i(U_hat_i) is always:
+#### Concept: Including an intercept ensures that the OLS first-order condition forces the residuals to sum to exactly zero.
+#### Correct Answer: 0
+
+
+#### Question 7:
+#### An R^2 close to 0 means:
+#### Concept: A low R-squared indicates that the model's regressor explains a relatively small share of the variance in Y.
+#### Correct Answer: The OLS line explains little of the variation in Y common, and not necessarily a bad model
+
+
+#### Question 8:
+#### The point (X_bar, Y_bar):
+#### Concept: The OLS sample regression line passes directly through the sample means of X and Y: Y_bar = beta_hat_0 + beta_hat_1 * X_bar.
+#### Correct Answer: Always lies on the OLS regression line
+
+
+#### =================================================================================================================
+#### ECON 377 - Problem Set 6 (Questions 9 - 20)
+#### Applied Calculations, R Foundations, & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 9:
+#### For the sample x = (1, 6, 6), y = (8, 2, 6), find the OLS slope
+#### beta_hat_1 = sum((X_i - X_bar) * (Y_i - Y_bar)) / sum((X_i - X_bar)^2). (round to the hundredths)
+x_9 <- c(1, 6, 6)
+y_9 <- c(8, 2, 6)
+fit_9 <- lm(y_9 ~ x_9)
+beta1_9 <- coef(fit_9)["x_9"]
+round(beta1_9, 2)                       # Output: -0.80
+
+
+#### Question 10:
+#### For that sample x = (5, 8, 1), y = (12, 9, 0), find the OLS intercept beta_hat_0 = Y_bar - beta_hat_1 * X_bar. (round to the hundredths)
+x_10 <- c(5, 8, 1)
+y_10 <- c(12, 9, 0)
+fit_10 <- lm(y_10 ~ x_10)
+beta0_10 <- coef(fit_10)["(Intercept)"]
+round(beta0_10, 2)                      # Output: 0.57
+
+
+#### Question 11:
+#### For the sample x = (8, 3, 4), y = (1, 8, 7), fit the OLS line y_hat = beta_hat_0 + beta_hat_1 * x and predict y_hat at x = 3. (round to the hundredths)
+x_11 <- c(8, 3, 4)
+y_11 <- c(1, 8, 7)
+fit_11 <- lm(y_11 ~ x_11)
+pred_11 <- predict(fit_11, newdata = data.frame(x_11 = 3))
+round(unname(pred_11), 2)               # Output: 8.19
+
+
+#### Question 12:
+#### A fitted line is y_hat = 7 + (9/10) * x. Find the fitted value y_hat at x = 9. (round to the hundredths)
+beta0_12 <- 7
+beta1_12 <- 9 / 10
+x_val_12 <- 9
+y_hat_12 <- beta0_12 + beta1_12 * x_val_12
+round(y_hat_12, 2)                      # Output: 15.10
+
+
+#### Question 13:
+#### A fitted line is y_hat = -2 + (7/10) * x. A person has x = 8 and actual y = 20. Find the residual u_hat = y - y_hat. (round to the hundredths)
+beta0_13 <- -2
+beta1_13 <- 7 / 10
+x_val_13 <- 8
+y_act_13 <- 20
+y_hat_13 <- beta0_13 + beta1_13 * x_val_13
+u_hat_13 <- y_act_13 - y_hat_13
+round(u_hat_13, 2)                      # Output: 16.40
+
+
+#### Question 14:
+#### A fitted slope is beta_hat_1 = 6/10. Using Delta y_hat = beta_hat_1 * Delta x, find the predicted change in y when x rises by 6. (round to the hundredths)
+beta1_14  <- 6 / 10
+deltaX_14 <- 6
+deltaY_14 <- beta1_14 * deltaX_14
+round(deltaY_14, 2)                     # Output: 3.60
+
+
+#### Question 15:
+#### For the fitted line y_hat = 0 + (5/10) * x and the three points (5, 11), (3, 10), (10, 9), find SSR = sum((Y_i - Y_hat_i)^2). (round to the hundredths)
+x_15     <- c(5, 3, 10)
+y_15     <- c(11, 10, 9)
+y_hat_15 <- 0 + (5 / 10) * x_15
+u_hat_15 <- y_15 - y_hat_15
+SSR_15   <- sum(u_hat_15^2)
+round(SSR_15, 2)                        # Output: 160.50
+
+
+#### Question 16:
+#### A regression has SST = 323 and SSR = 150. Find the explained sum of squares SSE. (round to the hundredths)
+SST_16 <- 323
+SSR_16 <- 150
+SSE_16 <- SST_16 - SSR_16
+round(SSE_16, 2)                        # Output: 173.00
+
+
+#### Question 17:
+#### A regression has SST = 276 and SSR = 34. Find R^2. (round to the hundredths)
+SST_17 <- 276
+SSR_17 <- 34
+R2_17  <- 1 - (SSR_17 / SST_17)
+round(R2_17, 2)                         # Output: 0.88
+
+
+#### Question 18:
+#### A regression has SSE = 40 and SST = 264. Find R^2. (round to the hundredths)
+SSE_18 <- 40
+SST_18 <- 264
+R2_18  <- SSE_18 / SST_18
+round(R2_18, 2)                         # Output: 0.15
+
+
+#### Question 19:
+#### A regression has SST = 376 and SSR = 88. What fraction of the variation in Y is UNEXPLAINED? (round to the hundredths)
+SST_19 <- 376
+SSR_19 <- 88
+unexplained_frac_19 <- SSR_19 / SST_19
+round(unexplained_frac_19, 2)           # Output: 0.23
+
+
+#### Question 20:
+#### A regression has SST = 345 and R^2 = 37/100. Find SSR. (round to the hundredths)
+SST_20 <- 345
+R2_20  <- 37 / 100
+SSR_20 <- SST_20 * (1 - R2_20)
+round(SSR_20, 2)                        # Output: 217.35
+
+#### =================================================================================================================
+#### =================================================================================================================
+
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 6 (Questions 1 - 8)
+#### Theoretical & Conceptual Questions & Correct Answers
+#### =================================================================================================================
+
+#### Question 1:
+#### In OLS, the fitted value Y_hat_i = beta_hat_0 + beta_hat_1 * X_i is:
+#### Concept: The fitted value represents the OLS regression model's predicted conditional mean for Y at a given X_i.
+#### Correct Answer: The model's PREDICTION of Y at X_i
+
+
+#### Question 2:
+#### The OLS residual U_hat_i equals:
+#### Concept: By definition, residuals are the difference between actual observed values and fitted/predicted values: Y_i - Y_hat_i.
+#### Correct Answer: Y_i - Y_hat_i (actual minus fitted)
+
+
+#### Question 3:
+#### A POSITIVE residual (U_hat_i > 0) means OLS:
+#### Concept: When U_hat_i = Y_i - Y_hat_i > 0, actual Y_i is greater than predicted Y_hat_i, meaning the model under-predicted the observation.
+#### Correct Answer: Under-predicted Y_i (actual > fitted)
+
+
+#### Question 4:
+#### R^2 is:
+#### Concept: R^2 (the coefficient of determination) quantifies the proportion of sample variation in the dependent variable explained by the model.
+#### Correct Answer: The fraction of the sample variation in Y explained by X
+
+
+#### Question 5:
+#### The total sum of squares decomposes as SST =
+#### Concept: Total variation decomposes into explained variation and unexplained residual variation: SST = SSE + SSR.
+#### Correct Answer: SSE + SSR
+
+
+#### Question 6:
+#### The sum of the OLS residuals sum_i(U_hat_i) is always:
+#### Concept: Including an intercept ensures that the OLS first-order condition forces the residuals to sum to exactly zero.
+#### Correct Answer: 0
+
+
+#### Question 7:
+#### An R^2 close to 0 means:
+#### Concept: A low R-squared indicates that the model's regressor explains a relatively small share of the variance in Y.
+#### Correct Answer: The OLS line explains little of the variation in Y common, and not necessarily a bad model
+
+
+#### Question 8:
+#### The point (X_bar, Y_bar):
+#### Concept: The OLS sample regression line passes directly through the sample means of X and Y: Y_bar = beta_hat_0 + beta_hat_1 * X_bar.
+#### Correct Answer: Always lies on the OLS regression line
+
+
+#### =================================================================================================================
+#### ECON 377 - Problem Set 6 (Questions 9 - 20)
+#### Applied Calculations, R Foundations, & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+
+#### Question 9:
+#### For the sample x = (1, 6, 6), y = (8, 2, 6), find the OLS slope
+#### beta_hat_1 = sum((X_i - X_bar) * (Y_i - Y_bar)) / sum((X_i - X_bar)^2). (round to the hundredths)
+x_9 <- c(1, 6, 6)
+y_9 <- c(8, 2, 6)
+fit_9 <- lm(y_9 ~ x_9)
+beta1_9 <- coef(fit_9)["x_9"]
+round(beta1_9, 2)                       # Output: -0.80
+
+
+#### Question 10:
+#### For that sample x = (5, 8, 1), y = (12, 9, 0), find the OLS intercept beta_hat_0 = Y_bar - beta_hat_1 * X_bar. (round to the hundredths)
+x_10 <- c(5, 8, 1)
+y_10 <- c(12, 9, 0)
+fit_10 <- lm(y_10 ~ x_10)
+beta0_10 <- coef(fit_10)["(Intercept)"]
+round(beta0_10, 2)                      # Output: 0.57
+
+
+#### Question 11:
+#### For the sample x = (8, 3, 4), y = (1, 8, 7), fit the OLS line y_hat = beta_hat_0 + beta_hat_1 * x and predict y_hat at x = 3. (round to the hundredths)
+x_11 <- c(8, 3, 4)
+y_11 <- c(1, 8, 7)
+fit_11 <- lm(y_11 ~ x_11)
+pred_11 <- predict(fit_11, newdata = data.frame(x_11 = 3))
+round(unname(pred_11), 2)               # Output: 8.19
+
+
+#### Question 12:
+#### A fitted line is y_hat = 7 + (9/10) * x. Find the fitted value y_hat at x = 9. (round to the hundredths)
+beta0_12 <- 7
+beta1_12 <- 9 / 10
+x_val_12 <- 9
+y_hat_12 <- beta0_12 + beta1_12 * x_val_12
+round(y_hat_12, 2)                      # Output: 15.10
+
+
+#### Question 13:
+#### A fitted line is y_hat = -2 + (7/10) * x. A person has x = 8 and actual y = 20. Find the residual u_hat = y - y_hat. (round to the hundredths)
+beta0_13 <- -2
+beta1_13 <- 7 / 10
+x_val_13 <- 8
+y_act_13 <- 20
+y_hat_13 <- beta0_13 + beta1_13 * x_val_13
+u_hat_13 <- y_act_13 - y_hat_13
+round(u_hat_13, 2)                      # Output: 16.40
+
+
+#### Question 14:
+#### A fitted slope is beta_hat_1 = 6/10. Using Delta y_hat = beta_hat_1 * Delta x, find the predicted change in y when x rises by 6. (round to the hundredths)
+beta1_14  <- 6 / 10
+deltaX_14 <- 6
+deltaY_14 <- beta1_14 * deltaX_14
+round(deltaY_14, 2)                     # Output: 3.60
+
+
+#### Question 15:
+#### For the fitted line y_hat = 0 + (5/10) * x and the three points (5, 11), (3, 10), (10, 9), find SSR = sum((Y_i - Y_hat_i)^2). (round to the hundredths)
+x_15     <- c(5, 3, 10)
+y_15     <- c(11, 10, 9)
+y_hat_15 <- 0 + (5 / 10) * x_15
+u_hat_15 <- y_15 - y_hat_15
+SSR_15   <- sum(u_hat_15^2)
+round(SSR_15, 2)                        # Output: 160.50
+
+
+#### Question 16:
+#### A regression has SST = 323 and SSR = 150. Find the explained sum of squares SSE. (round to the hundredths)
+SST_16 <- 323
+SSR_16 <- 150
+SSE_16 <- SST_16 - SSR_16
+round(SSE_16, 2)                        # Output: 173.00
+
+
+#### Question 17:
+#### A regression has SST = 276 and SSR = 34. Find R^2. (round to the hundredths)
+SST_17 <- 276
+SSR_17 <- 34
+R2_17  <- 1 - (SSR_17 / SST_17)
+round(R2_17, 2)                         # Output: 0.88
+
+
+#### Question 18:
+#### A regression has SSE = 40 and SST = 264. Find R^2. (round to the hundredths)
+SSE_18 <- 40
+SST_18 <- 264
+R2_18  <- SSE_18 / SST_18
+round(R2_18, 2)                         # Output: 0.15
+
+
+#### Question 19:
+#### A regression has SST = 376 and SSR = 88. What fraction of the variation in Y is UNEXPLAINED? (round to the hundredths)
+SST_19 <- 376
+SSR_19 <- 88
+unexplained_frac_19 <- SSR_19 / SST_19
+round(unexplained_frac_19, 2)           # Output: 0.23
+
+
+#### Question 20:
+#### A regression has SST = 345 and R^2 = 37/100. Find SSR. (round to the hundredths)
+SST_20 <- 345
+R2_20  <- 37 / 100
+SSR_20 <- SST_20 * (1 - R2_20)
+round(SSR_20, 2)                        # Output: 217.35
+
+#### =================================================================================================================
+#### =================================================================================================================
