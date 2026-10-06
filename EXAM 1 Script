@@ -1217,3 +1217,100 @@ round(SSR_20, 2)                        # Output: 217.35
 
 #### =================================================================================================================
 #### =================================================================================================================
+
+
+#### =================================================================================================================
+#### ECON 377 - PROBLEM SET 7 (Questions 1 - 11)
+#### Applied Real Data Analysis with Wooldridge & Question Code
+#### =================================================================================================================
+
+rm(list = ls()) # Clear workspace memory
+
+#### Setup: Load libraries and datasets
+library(wooldridge)
+data("wage1")
+data("bwght")
+
+
+#### Question 1:
+#### How many workers are in the wage1 sample? (Hint: nrow(wage1))
+n_workers <- nrow(wage1)
+n_workers                               # Output: 526
+
+
+#### Question 2:
+#### What is the sample mean of hourly wage, wage1$wage? (Hint: mean()) (round to the hundredths)
+mean_wage <- mean(wage1$wage)
+round(mean_wage, 2)                     # Output: 5.90
+
+
+#### Question 3:
+#### What is the sample standard deviation of years of education, wage1$educ? (Hint: sd()) (round to the hundredths)
+sd_educ <- sd(wage1$educ)
+round(sd_educ, 2)                       # Output: 2.77
+
+
+#### Question 4:
+#### Run the OLS regression of wage on educ: reg <- lm(wage ~ educ, data = wage1).
+#### Save the slope as b1 <- reg$coefficients[2]. What is the OLS slope beta_hat_1? (round to the hundredths)
+reg <- lm(wage ~ educ, data = wage1)
+b1  <- reg$coefficients[2]
+round(b1, 2)                            # Output: 0.54
+
+
+#### Question 5:
+#### Save the intercept of the regression from Question 4 as b0 <- reg$coefficients[1].
+#### What is the OLS intercept beta_hat_0? (round to the hundredths)
+b0 <- reg$coefficients[1]
+round(b0, 2)                            # Output: -0.90
+
+
+#### Question 6:
+#### Using your saved b0 and b1 from Questions 4 and 5, what is the predicted hourly wage
+#### wage_hat = beta_hat_0 + beta_hat_1 * educ for a worker with educ = 14 years of education? (round to the hundredths)
+wage_hat_14 <- b0 + b1 * 14
+round(wage_hat_14, 2)                   # Output: 6.68 (or 6.67)
+
+
+#### Question 7:
+#### Using your saved b1 from Question 4, by how much does the predicted hourly wage change
+#### when education rises by 2 years? Use Delta wage_hat = beta_hat_1 * Delta educ. (round to the hundredths)
+delta_educ <- 2
+delta_wage <- b1 * delta_educ
+round(delta_wage, 2)                    # Output: 1.08
+
+
+#### Question 8:
+#### What is the sum of squared residuals for the regression of wage on educ from Question 4?
+#### Save it with SSR <- sum(reg$residuals^2), then type SSR to see it. (round to the hundredths)
+SSR <- sum(reg$residuals^2)
+round(SSR, 2)                           # Output: 5980.68
+
+
+#### Question 9:
+#### What is R^2 for the regression of wage on educ from Question 4? Use R^2 = 1 - SSR/SST,
+#### with SSR from Question 8 and SST <- sum((wage1$wage - mean(wage1$wage))^2). (round to the hundredths)
+SST <- sum((wage1$wage - mean(wage1$wage))^2)
+R2  <- 1 - (SSR / SST)
+round(R2, 2)                            # Output: 0.16
+
+
+#### Question 10:
+#### Now use bwght: bwght is a baby's birth weight in ounces, and cigs is the number of cigarettes the
+#### mother smoked per day during pregnancy. Run reg2 <- lm(bwght ~ cigs, data = bwght).
+#### By how many ounces does predicted birth weight change when the mother smokes 5 more cigarettes per day? (round to the hundredths)
+reg2 <- lm(bwght ~ cigs, data = bwght)
+b1_cigs <- reg2$coefficients["cigs"]
+delta_cigs <- 5
+delta_bwght <- b1_cigs * delta_cigs
+round(delta_bwght, 2)                   # Output: -2.57
+
+
+#### Question 11:
+#### CHALLENGE (will not be on the exam). Back in wage1, the conditional sample mean of wage given
+#### educ = 16 is the average wage among the workers with exactly 16 years of education. (round to the hundredths)
+mean_wage_educ16 <- mean(wage1$wage[wage1$educ == 16])
+round(mean_wage_educ16, 2)              # Output: 8.04
+
+#### =================================================================================================================
+#### =================================================================================================================
