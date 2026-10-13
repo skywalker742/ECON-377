@@ -151,7 +151,101 @@ delta_y <- b1 * delta_X1 + b2 * delta_X2 # 8.4
 delta_y
 
 # ==============================================================
-# EMERGENCY CODE
+# EMERGENCY Exam 1 Code
 # ==============================================================
 
+############################################################
+# ECN 377 - Exam I Study Script
+# Purpose: Study/review reference for the returned exam.
+# Numeric answers are generally rounded to two decimal places.
+# Run in RStudio. Install wooldridge once if needed:
+# install.packages("wooldridge")
+############################################################
 
+
+# Q1. One company's daily closing stock price, 2015-2024
+# Formula/concept: Observations on one variable over time = time-series data.
+# Answer: Time-series data.
+
+# Q2. Police officers and crime are positively correlated across U.S. cities.
+# Formula/concept: Correlation does not establish causation; omitted variables may affect both.
+# Answer: Correlation alone cannot show that police cause crime; larger cities may have more of both.
+
+# Q3. Unemployment falls from 5% to 4%.
+# Formulas: percentage-point change = new rate - old rate; percent change = (new-old)/old*100.
+old_rate <- 5
+new_rate <- 4
+pp_change <- new_rate - old_rate
+pct_change <- (new_rate - old_rate) / old_rate * 100
+# Calculations:", pp_change, "percentage points;", pct_change, "%.
+# Answer: Fell by 1 percentage point and by 20%.
+
+# Q4. Match parts of Y = beta0 + beta1*X + U.
+# Formula/concept: Y = dependent variable; X = independent variable; beta0 = intercept;
+# beta1 = slope parameter; U = error term. Fitted value is Y-hat, not one of these symbols.
+# Answer: Y dependent variable; X independent variable; beta1 slope; beta0 intercept; U error.
+
+# Q5. yield = beta0 + beta1*fertilizer + U; better land gets more fertilizer.
+# Formula/assumption: E[U | fertilizer] = 0 for the zero conditional mean assumption.
+# Answer: The assumption fails because the average of U changes with fertilizer (land quality is omitted).
+
+# Q6. Fitted value is 12 and residual is -3.
+# Formula: residual = observed Y - fitted Y, so observed Y = fitted Y + residual.
+yhat <- 12
+resid <- -3
+y_observed <- yhat + resid
+# Calculation: Y = 12 + (-3) =", y_observed, ".
+# Answer: Y = 9; OLS over-predicted (the prediction 12 exceeds actual 9).
+
+# Q7. Compare E[price | make=Toyota] and E[price | make=Rolls-Royce].
+# Formula/concept: A conditional expectation is the mean for the specified group.
+# Answer: E[price | make=Rolls-Royce] is larger.
+
+# Q8. Compare income variance conditional on age 10 versus age 40.
+# Formula/concept: Conditional variance measures income dispersion within the stated age group.
+# Answer: Var(income | age=40) is larger.
+
+# Q9. Every observation lies exactly on the OLS line and the y values are not all equal.
+# Formulas: SSR = sum(residual^2); R-squared = 1 - SSR/SST.
+# Calculation: all residuals are 0, so SSR=0 and, since SST>0, R-squared=1.
+# Answer: SSR = 0 and R-squared = 1.
+
+# Q10. Regression of house price on square footage has R-squared = 0.62.
+# Formula/concept: R-squared is the share of sample variation in Y explained by the regression.
+# Calculation: 0.62*100 = 62%.
+# Answer: 62% of sample variation in house price is explained by square footage; this does not prove causation.
+
+# Q11. Choose the OLS line from residual sum, absolute residual sum, and squared residual sum.
+# Formula/concept: OLS minimizes sum of squared residuals; with an intercept, residuals sum to zero.
+# Line B has residual sum 0 and the smallest squared-residual sum (2.40).
+# Answer: Line B.
+
+# Q12. Covariance of income and education is 3100 and correlation is 0.15. Income is rescaled to thousands.
+# Formula: corr(X,Y) = cov(X,Y)/(sd(X)*sd(Y)); positive rescaling does not change correlation.
+# Answer: 0.15.
+
+# Q13. Eight values: first is 52 and each of the other seven is 6.
+# Formula: sample mean = sum(x)/n.
+values <- c(52, rep(6, 7))
+mean_q13 <- mean(values)
+# Calculation: (52 + 7*6)/8 =", mean_q13, ".
+# Answer:", round(mean_q13, 2), "
+
+# Q14. y = 9 + 3.4*X1 - 0.5*X2; X1 rises by 3 and X2 falls by 2.
+# Formula: change in y = beta1*change in X1 + beta2*change in X2.
+change_y <- 3.4*3 + (-0.5)*(-2)
+# Calculation: 3.4*3 + (-0.5)*(-2) =", change_y, ".
+# Answer:", round(change_y, 2), "
+
+# Q15. Unemployment rises from 4.7% to 4.9%. Find percent change.
+# Formula: percent change = (new-old)/old*100.
+pct_change_q15 <- (4.9 - 4.7)/4.7*100
+# Calculation: (4.9 - 4.7)/4.7*100 =", round(pct_change_q15, 2), "%.
+# Answer:", round(pct_change_q15, 2), "%
+
+# Q16. Find sample standard deviation of z = (12, 3, 5, 11).
+# Formula: s = sqrt(sum((z - mean(z))^2)/(n-1)); R's sd() uses n-1.
+z <- c(12, 3, 5, 11)
+sd_q16 <- sd(z)
+# Calculation: sd(c(12,3,5,11)) =", round(sd_q16, 2), ".
+# Answer:", round(sd_q16, 2), "
