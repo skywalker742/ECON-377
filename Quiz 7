@@ -154,98 +154,129 @@ delta_y
 # EMERGENCY Exam 1 Code
 # ==============================================================
 
-############################################################
-# ECN 377 - Exam I Study Script
-# Purpose: Study/review reference for the returned exam.
-# Numeric answers are generally rounded to two decimal places.
-# Run in RStudio. Install wooldridge once if needed:
-# install.packages("wooldridge")
-############################################################
+# Formula: residual_i = observed y_i - fitted y_i.
+x_q23 <- c(1, 2, 3, 7, 9)
+y_q23 <- c(8, 4, 5, 12, 4)
+model_q23 <- lm(y_q23 ~ x_q23)
+fitted_third_q23 <- as.numeric(predict(model_q23, newdata = data.frame(x_q23 = 3)))
+residual_third_q23 <- 5 - fitted_third_q23
+print(round(fitted_third_q23, 2))
+print(round(residual_third_q23, 2))
+# Correct answer: -1.43.
 
+# QUESTION 24
+# Question: A sample has n=36 observations and sample variance s^2=4. Find SST.
+# Formula: s^2 = SST/(n-1), so SST = (n-1)*s^2.
+SST_q24 <- (36 - 1) * 4
+print(SST_q24)
+# Correct answer: 140.00.
 
-# Q1. One company's daily closing stock price, 2015-2024
-# Formula/concept: Observations on one variable over time = time-series data.
-# Answer: Time-series data.
+# QUESTION 25
+# Question: Explained sum of squares SSE=82 and R-squared=0.52. Find sum of squared residuals SSR.
+# Formula: R^2 = SSE/(SSE+SSR), so SSR = SSE*(1-R^2)/R^2.
+SSR_q25 <- 82 * (1 - 0.52) / 0.52
+print(round(SSR_q25, 2))
+# Correct answer: 75.69.
 
-# Q2. Police officers and crime are positively correlated across U.S. cities.
-# Formula/concept: Correlation does not establish causation; omitted variables may affect both.
-# Answer: Correlation alone cannot show that police cause crime; larger cities may have more of both.
+# QUESTION 26
+# Question: OLS intercept beta0=3, slope beta1=3.5, and sample mean x=8. Find sample mean y.
+# Formula: An OLS line with an intercept passes through sample means: ybar = beta0 + beta1*xbar.
+ybar_q26 <- 3 + 3.5 * 8
+print(ybar_q26)
+# Correct answer: 31.00.
 
-# Q3. Unemployment falls from 5% to 4%.
-# Formulas: percentage-point change = new rate - old rate; percent change = (new-old)/old*100.
-old_rate <- 5
-new_rate <- 4
-pp_change <- new_rate - old_rate
-pct_change <- (new_rate - old_rate) / old_rate * 100
-# Calculations:", pp_change, "percentage points;", pct_change, "%.
-# Answer: Fell by 1 percentage point and by 20%.
+# QUESTION 27
+# Question: Five OLS residuals are -0.7, 2.3, 2.3, 1.8, and one unknown. Find the fifth residual.
+# Formula: For OLS with an intercept, residuals sum to zero.
+known_residuals_q27 <- c(-0.7, 2.3, 2.3, 1.8)
+fifth_residual_q27 <- -sum(known_residuals_q27)
+print(round(fifth_residual_q27, 2))
+# Correct answer: -5.70.
 
-# Q4. Match parts of Y = beta0 + beta1*X + U.
-# Formula/concept: Y = dependent variable; X = independent variable; beta0 = intercept;
-# beta1 = slope parameter; U = error term. Fitted value is Y-hat, not one of these symbols.
-# Answer: Y dependent variable; X independent variable; beta1 slope; beta0 intercept; U error.
+# QUESTION 28
+# Question: x=(2,3,7,8,11,13), y=(9,13,9,2,14,8). Regress y on x and compute sum of OLS residuals.
+# Formula/property: With an intercept, the sum of OLS residuals is zero (up to numerical precision).
+x_q28 <- c(2, 3, 7, 8, 11, 13)
+y_q28 <- c(9, 13, 9, 2, 14, 8)
+model_q28 <- lm(y_q28 ~ x_q28)
+sum_residuals_q28 <- sum(residuals(model_q28))
+print(round(sum_residuals_q28, 10))
+# Correct answer: 0.00 (up to numerical precision).
 
-# Q5. yield = beta0 + beta1*fertilizer + U; better land gets more fertilizer.
-# Formula/assumption: E[U | fertilizer] = 0 for the zero conditional mean assumption.
-# Answer: The assumption fails because the average of U changes with fertilizer (land quality is omitted).
+# QUESTION 29
+# Question: Data ceosal1. How many CEOs are in the sample?
+# Calculation: number of rows in ceosal1.
 
-# Q6. Fitted value is 12 and residual is -3.
-# Formula: residual = observed Y - fitted Y, so observed Y = fitted Y + residual.
-yhat <- 12
-resid <- -3
-y_observed <- yhat + resid
-# Calculation: Y = 12 + (-3) =", y_observed, ".
-# Answer: Y = 9; OLS over-predicted (the prediction 12 exceeds actual 9).
+# QUESTION 30
+# Question: Data ceosal1. Find sample mean of return on equity (roe).
+# Formula: mean(roe) = sum(roe_i)/n.
 
-# Q7. Compare E[price | make=Toyota] and E[price | make=Rolls-Royce].
-# Formula/concept: A conditional expectation is the mean for the specified group.
-# Answer: E[price | make=Rolls-Royce] is larger.
+# QUESTION 31
+# Question: Data ceosal1. Find sample correlation between salary and roe.
+# Formula: sample correlation between salary and roe.
 
-# Q8. Compare income variance conditional on age 10 versus age 40.
-# Formula/concept: Conditional variance measures income dispersion within the stated age group.
-# Answer: Var(income | age=40) is larger.
+# QUESTION 32
+# Question: Data wage1. Regress wage on tenure. Find OLS slope.
+# Formula: wage_i = beta0 + beta1*tenure_i + u_i; slope is coefficient on tenure.
 
-# Q9. Every observation lies exactly on the OLS line and the y values are not all equal.
-# Formulas: SSR = sum(residual^2); R-squared = 1 - SSR/SST.
-# Calculation: all residuals are 0, so SSR=0 and, since SST>0, R-squared=1.
-# Answer: SSR = 0 and R-squared = 1.
+# QUESTION 33
+# Question: Using wage on tenure regression, predict hourly wage for tenure=7 years.
+# Formula: yhat = beta0 + beta1*tenure.
 
-# Q10. Regression of house price on square footage has R-squared = 0.62.
-# Formula/concept: R-squared is the share of sample variation in Y explained by the regression.
-# Calculation: 0.62*100 = 62%.
-# Answer: 62% of sample variation in house price is explained by square footage; this does not prove causation.
+# QUESTION 34
+# Question: Using wage on tenure regression, find predicted wage change when tenure rises from 3 to 16 years.
+# Formula: predicted change = slope*(16-3).
 
-# Q11. Choose the OLS line from residual sum, absolute residual sum, and squared residual sum.
-# Formula/concept: OLS minimizes sum of squared residuals; with an intercept, residuals sum to zero.
-# Line B has residual sum 0 and the smallest squared-residual sum (2.40).
-# Answer: Line B.
+# QUESTION 35
+# Question: In wage1 regression of wage on tenure, what percent of sample wage variation is explained by tenure?
+# Formula: explained percent = R-squared * 100.
 
-# Q12. Covariance of income and education is 3100 and correlation is 0.15. Income is rescaled to thousands.
-# Formula: corr(X,Y) = cov(X,Y)/(sd(X)*sd(Y)); positive rescaling does not change correlation.
-# Answer: 0.15.
+# QUESTION 36
+# Question: In wage1 regression of wage on tenure, find OLS residual for worker in row 2.
+# Formula: residual = observed wage - fitted wage.
 
-# Q13. Eight values: first is 52 and each of the other seven is 6.
-# Formula: sample mean = sum(x)/n.
-values <- c(52, rep(6, 7))
-mean_q13 <- mean(values)
-# Calculation: (52 + 7*6)/8 =", mean_q13, ".
-# Answer:", round(mean_q13, 2), "
+# QUESTION 37
+# Question: Data bwght. Regress birth weight (bwght) on family income (faminc). Find explained sum of squares SSE.
+# Formula: SSE = sum((fitted_i - mean(y))^2).
 
-# Q14. y = 9 + 3.4*X1 - 0.5*X2; X1 rises by 3 and X2 falls by 2.
-# Formula: change in y = beta1*change in X1 + beta2*change in X2.
-change_y <- 3.4*3 + (-0.5)*(-2)
-# Calculation: 3.4*3 + (-0.5)*(-2) =", change_y, ".
-# Answer:", round(change_y, 2), "
+# QUESTION 38
+# Question: In the bwght regression, by how many ounces does predicted birth weight change when family income rises by 16 ($16,000)?
+# Formula: predicted change = slope on faminc * 16.
 
-# Q15. Unemployment rises from 4.7% to 4.9%. Find percent change.
-# Formula: percent change = (new-old)/old*100.
-pct_change_q15 <- (4.9 - 4.7)/4.7*100
-# Calculation: (4.9 - 4.7)/4.7*100 =", round(pct_change_q15, 2), "%.
-# Answer:", round(pct_change_q15, 2), "%
+# Run the real-data questions if the wooldridge package is installed.
+if (!requireNamespace("wooldridge", quietly = TRUE)) {
+  message("Questions 29-38 need the wooldridge package. Install it with install.packages(\"wooldridge\") and rerun this script.")
+} else {
+  library(wooldridge)
 
-# Q16. Find sample standard deviation of z = (12, 3, 5, 11).
-# Formula: s = sqrt(sum((z - mean(z))^2)/(n-1)); R's sd() uses n-1.
-z <- c(12, 3, 5, 11)
-sd_q16 <- sd(z)
-# Calculation: sd(c(12,3,5,11)) =", round(sd_q16, 2), ".
-# Answer:", round(sd_q16, 2), "
+  data("ceosal1", package = "wooldridge")
+  answer_q29 <- nrow(ceosal1)
+  answer_q30 <- mean(ceosal1$roe, na.rm = TRUE)
+  answer_q31 <- cor(ceosal1$salary, ceosal1$roe, use = "complete.obs")
+  print(answer_q29)                 # Correct answer: 209
+  print(round(answer_q30, 2))       # Correct answer: 17.18
+  print(round(answer_q31, 2))       # Correct answer: 0.11
+
+  data("wage1", package = "wooldridge")
+  model_wage <- lm(wage ~ tenure, data = wage1)
+  answer_q32 <- unname(coef(model_wage)["tenure"])
+  answer_q33 <- as.numeric(predict(model_wage, newdata = data.frame(tenure = 7)))
+  answer_q34 <- answer_q32 * (16 - 3)
+  answer_q35 <- 100 * summary(model_wage)$r.squared
+  answer_q36 <- unname(residuals(model_wage)[2])
+  print(round(answer_q32, 2))       # Correct answer: 0.18
+  print(round(answer_q33, 2))       # Correct answer: 6.23
+  print(round(answer_q34, 2))       # Correct answer: 2.31
+  print(round(answer_q35, 2))       # Correct answer: 12.03 percent
+  print(round(answer_q36, 2))       # Correct answer: -2.11
+
+  data("bwght", package = "wooldridge")
+  model_bwght <- lm(bwght ~ faminc, data = bwght)
+  fitted_bwght <- fitted(model_bwght)
+  answer_q37 <- sum((fitted_bwght - mean(bwght$bwght, na.rm = TRUE))^2, na.rm = TRUE)
+  answer_q38 <- unname(coef(model_bwght)["faminc"]) * 16
+  print(round(answer_q37, 2))       # Correct answer: approximately 6819.05
+  print(round(answer_q38, 2))       # Correct answer: 1.89 ounces
+}
+
+# End of Questions 1-38.
