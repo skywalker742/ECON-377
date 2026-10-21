@@ -1,4 +1,9 @@
 #QUIZ 8
+# Derived from Problem Set 8 Questions: 14, 17, 19
+
+
+install.packages("wooldridge")   # run once if needed
+library(wooldridge)
 
 # Question 14:
 # In a regression of y on x, the OLS slope is β̂1 = 0.58. Every value of x is then divided by 100 (for example, percent to decimal when the divisor is 100). What is the new OLS slope? (round to the hundredths)
