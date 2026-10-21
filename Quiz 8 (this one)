@@ -41,27 +41,21 @@ q1_answer <- "beta1_hat does not change; only beta0_hat changes."
 print(q1_answer)
 
 # Question 5:
-# A log-log regression gives log(y)_hat = 2.9 + 0.94 * log(x). By about what percent does y change when x falls by 8%? 
-# (Give a percent; it can be negative.) (round to the hundredths)
+# A log-log regression gives log(y)_hat = 2.9 + 0.94 * log(x). By about what percent does y change when x falls by 8%? (Give a percent; it can be negative.) (round to the hundredths)
 # Hint: log-log: % delta y approx beta1_hat * % delta x, and a fall means % delta x is negative.
-beta1_hat_q5 <- 0.94
+beta1_hat_q5   <- 0.94
 pct_delta_x_q5 <- -8
 pct_delta_y_q5 <- beta1_hat_q5 * pct_delta_x_q5
 round(pct_delta_y_q5, 2)
 
 # Question 6:
-# Data: ceosall (salary a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, 
-# in percent; sales = firm sales in millions of dollars). Run the log-level regression lm(log(salary) ~ roe, data = ceosall). 
-# By about what percent does predicted salary change when return on equity rises by 5 points? 
-# (Give a percent. Use the unrounded slope.) (round to the hundredths)
+# Data: ceosal1 (salary a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, in percent; sales = firm sales in millions of dollars). Run the log-level regression lm(log(salary) ~ roe, data = ceosall). By about what percent does predicted salary change when return on equity rises by 5 points? (Give a percent. Use the unrounded slope.) (round to the hundredths)
 # Hint: use the log-level row of Table 2.3 with delta roe = 5
-# Note: Requires the 'wooldridge' package. Uncomment install.packages line if needed.
-# install.packages("wooldridge")
 library(wooldridge)
-data(ceosall)
-reg_q6 <- lm(log(salary) ~ roe, data = ceosall)
-beta1_hat_q6 <- coef(reg_q6)["roe"]
-delta_roe_q6 <- 5
+data(ceosal1)
+reg_q6        <- lm(log(salary) ~ roe, data = ceosall)
+beta1_hat_q6  <- unname(coef(reg_q6)["roe"])
+delta_roe_q6  <- 5
 pct_change_q6 <- 100 * beta1_hat_q6 * delta_roe_q6
 round(pct_change_q6, 2)
 
