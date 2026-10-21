@@ -11,7 +11,7 @@ library(wooldridge)
 beta1_hat_q14 <- 0.58
 x_divisor_q14 <- 100
 beta1_new_q14 <- beta1_hat_q14 * x_divisor_q14
-round(beta1_new_q14, 2)  # Output: 58.00
+round(beta1_new_q14, 2)  
 
 
 # Question 17:
@@ -20,7 +20,7 @@ round(beta1_new_q14, 2)  # Output: 58.00
 beta1_hat_q17 <- 0.01
 change_x_q17 <- 2
 percent_change_y_q17 <- 100 * beta1_hat_q17 * change_x_q17
-round(percent_change_y_q17, 2)  # Output: 2.00
+round(percent_change_y_q17, 2)
 
 
 # Question 19:
@@ -29,7 +29,7 @@ round(percent_change_y_q17, 2)  # Output: 2.00
 beta1_hat_q19 <- 28.1
 percent_change_x_q19 <- 18
 change_y_q19 <- (beta1_hat_q19 / 100) * percent_change_x_q19
-round(change_y_q19, 2)  # Output: 5.06
+round(change_y_q19, 2)  
 
 # Derived from Problem Set 9 Questions: 1, 5, 6, 9, 13, 14, 15, 16
 
@@ -51,9 +51,9 @@ round(pct_delta_y_q5, 2)
 # Question 6:
 # Data: ceosal1 (salary a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, in percent; sales = firm sales in millions of dollars). Run the log-level regression lm(log(salary) ~ roe, data = ceosall). By about what percent does predicted salary change when return on equity rises by 5 points? (Give a percent. Use the unrounded slope.) (round to the hundredths)
 # Hint: use the log-level row of Table 2.3 with delta roe = 5
-library(wooldridge)
-data(ceosal1)
-reg_q6        <- lm(log(salary) ~ roe, data = ceosall)
+library("wooldridge")
+data("ceosal1")
+reg_q6        <- lm(log(salary) ~ roe, data = ceosal1)
 beta1_hat_q6  <- unname(coef(reg_q6)["roe"])
 delta_roe_q6  <- 5
 pct_change_q6 <- 100 * beta1_hat_q6 * delta_roe_q6
