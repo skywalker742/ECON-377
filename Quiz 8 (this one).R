@@ -1,0 +1,101 @@
+#QUIZ 8
+# Derived from Problem Set 8 Questions: 14, 17, 19
+
+
+install.packages("wooldridge")   # run once if needed
+library(wooldridge)
+
+# Question 14:
+# In a regression of y on x, the OLS slope is β̂1 = 0.58. Every value of x is then divided by 100 (for example, percent to decimal when the divisor is 100). What is the new OLS slope? (round to the hundredths)
+
+beta1_hat_q14 <- 0.58
+x_divisor_q14 <- 100
+beta1_new_q14 <- beta1_hat_q14 * x_divisor_q14
+round(beta1_new_q14, 2)  
+
+
+# Question 17:
+# A log-level regression gives log(y_hat) = 1.1 + 0.01 x. By about what percent does y change when x rises by 2? (Give a percent, e.g. 12.34 for 12.34%.) (round to the hundredths)
+
+beta1_hat_q17 <- 0.01
+change_x_q17 <- 2
+percent_change_y_q17 <- 100 * beta1_hat_q17 * change_x_q17
+round(percent_change_y_q17, 2)
+
+
+# Question 19:
+# A level-log regression gives y_hat = 178 + 28.1 log(x). By about how many units does y change when x rises by 18%? (round to the hundredths)
+
+beta1_hat_q19 <- 28.1
+percent_change_x_q19 <- 18
+change_y_q19 <- (beta1_hat_q19 / 100) * percent_change_x_q19
+round(change_y_q19, 2)  
+
+# Derived from Problem Set 9 Questions: 1, 5, 6, 9, 13, 14, 15, 16
+
+# Question 1:
+# A log-log regression of CEO salary on firm sales gives log(salary) = beta0_hat + beta1_hat * log(sales), 
+# with salary in thousands of dollars. Salary is then measured in dollars instead. What happens?
+# Answer:
+q1_answer <- "beta1_hat does not change; only beta0_hat changes."
+print(q1_answer)
+
+# Question 5:
+# A log-log regression gives log(y)_hat = 2.9 + 0.94 * log(x). By about what percent does y change when x falls by 8%? (Give a percent; it can be negative.) (round to the hundredths)
+# Hint: log-log: % delta y approx beta1_hat * % delta x, and a fall means % delta x is negative.
+beta1_hat_q5   <- 0.94
+pct_delta_x_q5 <- -8
+pct_delta_y_q5 <- beta1_hat_q5 * pct_delta_x_q5
+round(pct_delta_y_q5, 2)
+
+# Question 6:
+# Data: ceosal1 (salary a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, in percent; sales = firm sales in millions of dollars). Run the log-level regression lm(log(salary) ~ roe, data = ceosall). By about what percent does predicted salary change when return on equity rises by 5 points? (Give a percent. Use the unrounded slope.) (round to the hundredths)
+# Hint: use the log-level row of Table 2.3 with delta roe = 5
+library("wooldridge")
+data("ceosal1")
+reg_q6        <- lm(log(salary) ~ roe, data = ceosal1)
+beta1_hat_q6  <- unname(coef(reg_q6)["roe"])
+delta_roe_q6  <- 5
+pct_change_q6 <- 100 * beta1_hat_q6 * delta_roe_q6
+round(pct_change_q6, 2)
+
+# Question 9:
+# In ln(wage) = beta0 + beta1 * educ + U, which of the following is the most likely to contribute 
+# omitted-variable bias to the OLS slope on educ?
+q9_answer <- "The worker's ability, which raises wages and tends to be higher for people with more education."
+print(q9_answer)
+
+# Question 13:
+# Holding everything else fixed, which change makes Var(beta1_hat) smaller?
+q13_answer <- "More spread-out values of X (a larger SST_X)."
+print(q13_answer)
+
+# Question 14:
+# Under SLR1-SLR5, the error standard deviation is sigma = 2. A sample has the five X values 
+# x = (1, 2, 3, 4, 9). Find sd(beta1_hat). (round to the hundredths)
+# Hint: first SST_X = sum((x - mean(x))^2), then sd(beta1_hat) = sigma / sqrt(SST_X).
+sigma_q14 <- 2
+x_q14 <- c(1, 2, 3, 4, 9)
+sst_x_q14 <- sum((x_q14 - mean(x_q14))^2)
+sd_beta1_hat_q14 <- sigma_q14 / sqrt(sst_x_q14)
+round(sd_beta1_hat_q14, 2)
+
+# Question 15:
+# A simple regression on n = 44 observations has SSR = 109. Find the estimate of the error variance, 
+# sigma2_hat. (round to the hundredths)
+# Hint: sigma2_hat = SSR / (n - 2): divide by n - 2 not n or n - 1.
+n_q15 <- 44
+ssr_q15 <- 109
+sigma2_hat_q15 <- ssr_q15 / (n_q15 - 2)
+round(sigma2_hat_q15, 2)
+
+# Question 16:
+# A simple regression on n = 9 observations has SSR = 891, and SST_X = 7. 
+# Find the standard error se(beta1_hat). (round to the hundredths)
+# Hint: first sigma_hat = sqrt(SSR / (n - 2)), then se(beta1_hat) = sigma_hat / sqrt(SST_X)
+n_q16 <- 9
+ssr_q16 <- 891
+sst_x_q16 <- 7
+sigma_hat_q16 <- sqrt(ssr_q16 / (n_q16 - 2))
+se_beta1_hat_q16 <- sigma_hat_q16 / sqrt(sst_x_q16)
+round(se_beta1_hat_q16, 2)
