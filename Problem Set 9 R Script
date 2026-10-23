@@ -1,0 +1,152 @@
+# Problem Set 9 (second attempt)
+install.packages("wooldridge")   # run once if needed
+library(wooldridge)
+
+# Question 1:
+# A log-log regression of CEO salary on firm sales gives log(salary) = beta0_hat + beta1_hat * log(sales), 
+# with salary in thousands of dollars. Salary is then measured in dollars instead. What happens?
+q1_answer <- "beta1_hat does not change; only beta0_hat changes."
+print(q1_answer)
+
+# Question 2:
+# A log-level regression of log(wage) on tenure, with tenure measured in months, gives a slope of 0.0057. 
+# By about what percent does wage rise with one more year of tenure? (Give a percent, e.g. 12.34 for 12.34%.) (round to the hundredths)
+# Hint: one year is 12 months, so delta x = 12. Use the log-level row of Table 2.3.
+beta1_hat_q2 <- 0.0057
+delta_x_q2 <- 12
+pct_wage_rise_q2 <- 100 * beta1_hat_q2 * delta_x_q2
+round(pct_wage_rise_q2, 2)
+
+# Question 3:
+# A regression gives log(salary) = 3.92 + 0.13 log(sales), with salary in thousands of dollars. 
+# If salary is measured in dollars instead (every salary times 1000), what is the new intercept? (round to the hundredths)
+# Hint: log(1000 * y) = log(1000) + log(y), and log(1000) = 6.91 (in R: log(1000)).
+beta0_hat_q3 <- 3.92
+beta0_new_q3 <- beta0_hat_q3 + log(1000)
+round(beta0_new_q3, 2)
+
+# Question 4:
+# In which model is the slope read as % delta y approx 100 * beta1 * delta x?
+q4_answer <- "log-level: log(y) = beta0 + beta1*x + u"
+print(q4_answer)
+
+# Question 5:
+# A log-log regression gives log(y)_hat = 1.4 + 0.17 log(x). By about what percent does y change when x falls by 5%? (Give a percent; it can be negative.) (round to the hundredths)
+# Hint: log-log: % delta y approx beta1_hat * % delta x and a fall means % delta x is negative.
+beta1_hat_q5 <- 0.17
+pct_delta_x_q5 <- -5
+pct_delta_y_q5 <- beta1_hat_q5 * pct_delta_x_q5
+round(pct_delta_y_q5, 2)
+
+# Question 6:
+# Data: ceosal1 (salary = a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, in percent; sales = firm sales in millions of dollars). 
+# Run the log-level regression lm(log(salary) ~ roe, data = ceosal1). 
+# By about what percent does predicted salary change when return on equity rises by 5 points? (Give a percent. Use the unrounded slope.) (round to the hundredths)
+# Hint: use the log-level row of Table 2.3 with delta roe = 5
+data("ceosal1")
+reg_q6 <- lm(log(salary) ~ roe, data = ceosal1)
+beta1_hat_q6 <- unname(coef(reg_q6)["roe"])
+delta_roe_q6 <- 5
+pct_change_q6 <- 100 * beta1_hat_q6 * delta_roe_q6
+round(pct_change_q6, 2)
+
+# Question 7:
+# Data: ceosal1 (salary = a CEO's 1990 salary in thousands of dollars; roe = the firm's return on equity, in percent; sales = firm sales in millions of dollars). 
+# Run the level-log regression lm(salary ~ log(sales), data = ceosal1). 
+# By about how many thousand dollars does predicted salary change when sales rise by 10%? (Use the unrounded slope.) (round to the hundredths)
+# Hint: level-log: delta y approx (beta1_hat / 100) * % delta x (Table 2.3). Salary is already in thousands of dollars.
+reg_q7 <- lm(salary ~ log(sales), data = ceosal1)
+beta1_hat_q7 <- unname(coef(reg_q7)["log(sales)"])
+pct_delta_sales_q7 <- 10
+delta_salary_q7 <- (beta1_hat_q7 / 100) * pct_delta_sales_q7
+round(delta_salary_q7, 2)
+
+# Question 8:
+# Theorem 2.1 says that under SLR1-SLR4, E[beta1_hat] = beta1. What does this mean?
+q8_answer <- "Averaged over many random samples, beta1_hat equals beta1."
+print(q8_answer)
+
+# Question 9:
+# In wage = beta0 + beta1 * educ + U, which of the following is the most likely to contribute 
+# omitted-variable bias to the OLS slope on educ?
+q9_answer <- "The worker's ability, which raises wages and tends to be higher for people with more education."
+print(q9_answer)
+
+# Question 10:
+# In a sample of workers, every worker has exactly 12 years of education. You regress wage on education. What goes wrong?
+q10_answer <- "SLR3 fails: the X values are all the same, so the OLS slope cannot be computed."
+print(q10_answer)
+
+# Question 11:
+# Under SLR1-SLR5, the error variance is sigma^2 = 167 and SST_X = 25. Find Var(beta1_hat). (round to the hundredths)
+# Hint: Theorem 2.2: Var(beta1_hat) = sigma^2 / SST_X
+sigma2_q11 <- 167
+sst_x_q11 <- 25
+var_beta1_hat_q11 <- sigma2_q11 / sst_x_q11
+round(var_beta1_hat_q11, 2)
+
+# Question 12:
+# Under SLR1-SLR5, the error standard deviation is sigma = 13. A sample has n = 10 observations, and the sample variance of X is S_X^2 = 6. 
+# Find sd(beta1_hat). (round to the hundredths)
+# Hint: SST_X = (n - 1) * S_X^2, then sd(beta1_hat) = sigma / sqrt(SST_X).
+sigma_q12 <- 13
+n_q12 <- 10
+sx2_q12 <- 6
+sst_x_q12 <- (n_q12 - 1) * sx2_q12
+sd_beta1_hat_q12 <- sigma_q12 / sqrt(sst_x_q12)
+round(sd_beta1_hat_q12, 2)
+
+# Question 13:
+# Holding everything else fixed, which change makes Var(beta1_hat) smaller?
+q13_answer <- "More spread-out values of X (a larger SST_X)."
+print(q13_answer)
+
+# Question 14:
+# Under SLR1-SLR5, the error standard deviation is sigma = 2. A sample has the five X values x = (1, 2, 3, 7, 8). 
+# Find sd(beta1_hat). (round to the hundredths)
+# Hint: first SST_X = sum((x - mean(x))^2), then sd(beta1_hat) = sigma / sqrt(SST_X).
+sigma_q14 <- 2
+x_q14 <- c(1, 2, 3, 7, 8)
+sst_x_q14 <- sum((x_q14 - mean(x_q14))^2)
+sd_beta1_hat_q14 <- sigma_q14 / sqrt(sst_x_q14)
+round(sd_beta1_hat_q14, 2)
+
+# Question 15:
+# A simple regression on n = 53 observations has SSR = 238. Find the estimate of the error variance, sigma2_hat. (round to the hundredths)
+# Hint: sigma2_hat = SSR / (n - 2): divide by n - 2, not n or n - 1.
+n_q15 <- 53
+ssr_q15 <- 238
+sigma2_hat_q15 <- ssr_q15 / (n_q15 - 2)
+round(sigma2_hat_q15, 2)
+
+# Question 16:
+# A simple regression on n = 10 observations has SSR = 804 and SST_X = 28. 
+# Find the standard error se(beta1_hat). (round to the hundredths)
+# Hint: first sigma_hat = sqrt(SSR / (n - 2)), then se(beta1_hat) = sigma_hat / sqrt(SST_X)
+n_q16 <- 10
+ssr_q16 <- 804
+sst_x_q16 <- 28
+sigma_hat_q16 <- sqrt(ssr_q16 / (n_q16 - 2))
+se_beta1_hat_q16 <- sigma_hat_q16 / sqrt(sst_x_q16)
+round(se_beta1_hat_q16, 2)
+
+# Question 17:
+# In a regression of food spending on income, the spread of food spending around the regression line grows as income grows. Which statement is correct?
+q17_answer <- "SLR5 (homoskedasticity) fails, so the variance formula of Theorem 2.2, Var(beta1_hat) = sigma^2 / SST_X, no longer applies (OLS is still unbiased)."
+print(q17_answer)
+
+# Question 18:
+# Data: wage1 (wage = average hourly earnings in dollars; educ = years of education). 
+# Run reg <- lm(wage ~ educ, data = wage1). What is sigma_hat, the standard error of the regression? (round to the hundredths)
+# Hint: sigma_hat = sqrt(SSR / (n - 2)). In R: sqrt(sum(reg$residuals^2) / (nrow(wage1) - 2)), and check it against summary(reg)$sigma.
+data("wage1")
+reg_q18 <- lm(wage ~ educ, data = wage1)
+sigma_hat_q18 <- summary(reg_q18)$sigma
+round(sigma_hat_q18, 2)
+
+# Question 19:
+# Data: wage1 (wage = average hourly earnings in dollars; educ = years of education). 
+# What is SST_X for educ, the total sum of squares of the explanatory variable? (round to the hundredths)
+educ_vals_q19 <- wage1$educ
+sst_x_q19 <- sum((educ_vals_q19 - mean(educ_vals_q19))^2)
+round(sst_x_q19, 2)
