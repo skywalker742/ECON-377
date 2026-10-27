@@ -136,13 +136,4 @@ round(unname(delta_wage_q15), 2)
 
 
 
-# Question 21:
-# Data: wage1. Run the multiple regression lm(wage ~ educ + exper, data = wage1)
-# and the regression of the omitted variable on the included one, lm(exper ~ educ, data = wage1).
-# Compute beta2_hat * delta1_tilde, the exper coefficient from the first regression times the educ slope from the second.
-reg_mult_q21 <- lm(wage ~ educ + exper, data = wage1)
-reg_aux_q21 <- lm(exper ~ educ, data = wage1)
-beta2_hat_q21 <- coef(reg_mult_q21)["exper"]
-delta1_tilde_q21 <- coef(reg_aux_q21)["educ"]
-ovb_q21 <- beta2_hat_q21 * delta1_tilde_q21
-round(unname(ovb_q21), 2)
+
