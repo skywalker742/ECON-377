@@ -1,0 +1,239 @@
+```r
+# ==============================================================================
+# ECN 377 — Problem Set 10 R Solutions
+# Modeled strictly after QUIZ 8 R Script
+# Covers: Logs, OLS Properties, Multiple Regression, & Omitted-Variable Bias
+# Note: Quiz 9 (Wed 10/28) draws 11 questions from this set:
+#       #1, #2, #3, #4, #6, #7, #9, #12, #13, #14, #15.
+# ==============================================================================
+
+library(wooldridge)
+
+# ==============================================================================
+# PART 1: LOG TRANSFORMATIONS (Questions 1 - 3)
+# ==============================================================================
+
+# Question 1 (Quiz 9):
+# A regression gives test_score_hat = 12 + 8 * log(income). What does the 8 mean?
+q1_answer <- "A 1% rise in income is associated with a rise of about 0.08 points in the predicted test score."
+print(q1_answer)
+
+# Question 2 (Quiz 9):
+# A log-level regression gives log(y_hat) = 0.5 + 0.06 * x.
+# By about what percent does y change when x falls by 1?
+# Hint: log-level: % delta y approx 100 * beta1_hat * delta_x
+beta1_hat_q2 <- 0.06
+delta_x_q2   <- -1
+
+pct_change_y_q2 <- 100 * beta1_hat_q2 * delta_x_q2
+round(pct_change_y_q2, 2)
+
+# Question 3 (Quiz 9):
+# Data: bwght. Run the log-log regression lm(log(bwght) ~ log(faminc), data = bwght).
+# By about what percent does predicted birth weight change when family income rises by 20%?
+# Hint: log-log: % delta y approx beta1_hat * % delta x
+data("bwght")
+
+reg_q3 <- lm(log(bwght) ~ log(faminc), data = bwght)
+beta1_hat_q3   <- unname(coef(reg_q3)["log(faminc)"])
+pct_delta_x_q3 <- 20
+
+pct_change_y_q3 <- beta1_hat_q3 * pct_delta_x_q3
+round(pct_change_y_q3, 2)
+
+# ==============================================================================
+# PART 2: EXPECTED VALUES, VARIANCES, & STANDARD ERRORS (Questions 4 - 10)
+# ==============================================================================
+
+# Question 4 (Quiz 9):
+# Suppose you could draw 1,000 different random samples from the same population
+# and compute beta1_hat in each one. If OLS is unbiased (SLR1-SLR4 hold), which statement is correct?
+q4_answer <- "The average of the 1,000 estimates is close to beta1."
+print(q4_answer)
+
+# Question 5:
+# Why do we prefer an unbiased estimator with a smaller variance Var(beta1_hat)?
+q5_answer <- "Its estimates land closer to beta1 from sample to sample, so any one estimate is more reliable."
+print(q5_answer)
+
+# Question 6 (Quiz 9):
+# Under SLR1-SLR5, Var(beta1_hat) = sigma^2 / SST_X.
+# Holding everything else fixed, which changes would make Var(beta1_hat) larger? Select all that apply.
+q6_answer <- c(
+  "X values bunched more tightly together (a smaller SST_X)",
+  "A larger error variance sigma^2",
+  "A smaller sample (fewer observations with X spread the same way, so a smaller SST_X)"
+)
+print(q6_answer)
+
+# Question 7 (Quiz 9):
+# A simple regression on n = 9 observations has sigma_hat = 7.7, and Sx = 2.5.
+# Find the standard error se(beta1_hat).
+# Hint: SST_X = (n - 1) * Sx^2, then se(beta1_hat) = sigma_hat / sqrt(SST_X)
+n_q7         <- 9
+sigma_hat_q7 <- 7.7
+Sx_q7        <- 2.5
+
+sst_x_q7 <- (n_q7 - 1) * (Sx_q7^2)
+se_beta1_hat_q7 <- sigma_hat_q7 / sqrt(sst_x_q7)
+round(se_beta1_hat_q7, 2)
+
+# Question 8:
+# A simple regression uses the five X values x = (3, 5, 6, 8, 9) and has SSR = 37.
+# Find the standard error se(beta1_hat).
+# Hint: with n = 5, sigma_hat = sqrt(SSR / (n - 2)). Then SST_X = sum((x - xbar)^2) and se = sigma_hat / sqrt(SST_X)
+x_q8   <- c(3, 5, 6, 8, 9)
+n_q8   <- length(x_q8)
+ssr_q8 <- 37
+
+sigma_hat_q8 <- sqrt(ssr_q8 / (n_q8 - 2))
+sst_x_q8     <- sum((x_q8 - mean(x_q8))^2)
+se_beta1_hat_q8 <- sigma_hat_q8 / sqrt(sst_x_q8)
+round(se_beta1_hat_q8, 2)
+
+# Question 9 (Quiz 9):
+# Under SLR1-SLR5, a regression has sd(beta1_hat) = 1.84.
+# If the sample were 10 times as large, with the X values spread out in the same way
+# (so SST_X is also 10 times as large), what would sd(beta1_hat) be?
+# Hint: sd(beta1_hat) = sigma / sqrt(SST_X). Multiplying SST_X by k divides the sd by sqrt(k).
+sd_old_q9 <- 1.84
+k_q9      <- 10
+
+sd_new_q9 <- sd_old_q9 / sqrt(k_q9)
+round(sd_new_q9, 2)
+
+# Question 10:
+# Data: ceosal1. Run reg <- lm(salary ~ roe, data = ceosal1).
+# Compute the standard error se(beta1_hat) by hand from sigma_hat and SST_X.
+# Hint: sigma_hat = sqrt(SSR / (n - 2)) and SST_X = sum((ceosal1$roe - mean(ceosal1$roe))^2).
+data("ceosal1")
+
+reg_q10       <- lm(salary ~ roe, data = ceosal1)
+n_q10         <- nrow(ceosal1)
+ssr_q10       <- sum(residuals(reg_q10)^2)
+sigma_hat_q10 <- sqrt(ssr_q10 / (n_q10 - 2))
+sst_x_q10     <- sum((ceosal1$roe - mean(ceosal1$roe))^2)
+
+se_beta1_hat_q10 <- sigma_hat_q10 / sqrt(sst_x_q10)
+round(se_beta1_hat_q10, 2)
+
+# ==============================================================================
+# PART 3: MULTIPLE REGRESSION PREDICTIONS & CHANGES (Questions 11 - 17)
+# ==============================================================================
+
+# Question 11:
+# In log(wage_hat) = beta0_hat + beta1_hat * educ + beta2_hat * exper, what does beta1_hat measure?
+q11_answer <- "The predicted change in wage from one more year of education, holding experience fixed."
+print(q11_answer)
+
+# Question 12 (Quiz 9):
+# A multiple regression gives y_hat = 7 + 2.9 * x1 + 1.2 * x2.
+# Find the predicted value y_hat at x1 = 11 and x2 = 12.
+# Hint: plug both values in, exactly as in simple regression.
+b0_q12 <- 7
+b1_q12 <- 2.9
+b2_q12 <- 1.2
+x1_q12 <- 11
+x2_q12 <- 12
+
+y_hat_q12 <- b0_q12 + b1_q12 * x1_q12 + b2_q12 * x2_q12
+round(y_hat_q12, 2)
+
+# Question 13 (Quiz 9):
+# A multiple regression gives y_hat = 2 + 2.4 * x1 - 2.5 * x2.
+# If x1 rises by 6 and x2 rises by 2, by how much does y_hat change?
+# Hint: delta_y_hat = beta1_hat * delta_x1 + beta2_hat * delta_x2.
+b1_q13 <- 2.4
+b2_q13 <- -2.5
+delta_x1_q13 <- 6
+delta_x2_q13 <- 2
+
+delta_y_hat_q13 <- b1_q13 * delta_x1_q13 + b2_q13 * delta_x2_q13
+round(delta_y_hat_q13, 2)
+
+# Question 14 (Quiz 9):
+# Data: wage1. Run reg <- lm(wage ~ educ + exper + tenure, data = wage1).
+# What is the predicted hourly wage of a worker with 14 years of education, 10 years of experience, and 5 years of tenure?
+data("wage1")
+
+reg_q14   <- lm(wage ~ educ + exper + tenure, data = wage1)
+b_q14     <- coef(reg_q14)
+
+y_hat_q14 <- b_q14 + b_q14["educ"] * 14 + b_q14["exper"] * 10 + b_q14["tenure"] * 5
+round(unname(y_hat_q14), 2)
+
+# Question 15 (Quiz 9):
+# Data: wage1. Using the same regression of wage on educ, exper, and tenure,
+# by how much does the predicted hourly wage change when tenure rises by 3 years, holding education and experience fixed?
+# Hint: delta_wage_hat = beta3_hat * delta_tenure
+b_tenure_q15     <- coef(reg_q14)["tenure"]
+delta_tenure_q15 <- 3
+
+delta_wage_q15 <- b_tenure_q15 * delta_tenure_q15
+round(unname(delta_wage_q15), 2)
+
+# Question 16:
+# Data: ceosal1. Run reg <- lm(log(salary) ~ log(sales) + roe, data = ceosal1).
+# By about what percent does predicted salary change when return on equity rises by 10 points, holding sales fixed?
+# Hint: % delta salary approx 100 * beta_roe * delta_roe
+reg_q16       <- lm(log(salary) ~ log(sales) + roe, data = ceosal1)
+beta_roe_q16  <- coef(reg_q16)["roe"]
+delta_roe_q16 <- 10
+
+pct_change_q16 <- 100 * beta_roe_q16 * delta_roe_q16
+round(unname(pct_change_q16), 2)
+
+# Question 17:
+# Data: ceosal1. Using the same regression of log(salary) on log(sales) and roe,
+# what is the predicted salary, in thousands of dollars, of a CEO whose firm has sales of 5,000 and roe of 15?
+# Hint: first predict log(salary) by plugging in log(5000) and roe = 15, then undo the log with exp()
+b_q17           <- coef(reg_q16)
+log_sal_hat_q17 <- b_q17 + b_q17["log(sales)"] * log(5000) + b_q17["roe"] * 15
+
+sal_hat_q17 <- exp(log_sal_hat_q17)
+round(unname(sal_hat_q17), 2)
+
+# ==============================================================================
+# PART 4: OMITTED-VARIABLE BIAS (Questions 18 - 21)
+# ==============================================================================
+
+# Question 18:
+# Formula links simple and multiple regression slopes: beta1_tilde = beta1_hat + beta2_hat * delta1_tilde
+# The multiple regression of Y on X1 and X2 gives beta1_hat = 0.25 and beta2_hat = 1.44.
+# The slope from regressing X2 on X1 is delta1_tilde = 0.11.
+# Find the simple-regression slope beta1_tilde from regressing Y on X1 alone.
+beta1_hat_q18    <- 0.25
+beta2_hat_q18    <- 1.44
+delta1_tilde_q18 <- 0.11
+
+beta1_tilde_q18 <- beta1_hat_q18 + beta2_hat_q18 * delta1_tilde_q18
+round(beta1_tilde_q18, 2)
+
+# Question 19:
+# In the population, Y = beta0 + beta1 * X1 + beta2 * X2 + U with beta2 = 0.69.
+# You omit X2 and regress Y on X1 alone, and the slope from regressing X2 on X1 is delta1_tilde = 0.25.
+# What is the bias of the simple-regression slope, Bias(beta1_tilde) = E[beta1_tilde] - beta1?
+beta2_q19        <- 0.69
+delta1_tilde_q19 <- 0.25
+
+bias_q19 <- beta2_q19 * delta1_tilde_q19
+round(bias_q19, 2)
+
+# Question 20:
+# An omitted variable X2 lowers Y (beta2 < 0), and X2 is positively correlated with X1.
+# The simple-regression slope on X1 is:
+q20_answer <- "biased downward"
+print(q20_answer)
+
+# Question 21:
+# Data: wage1. Run the multiple regression lm(wage ~ educ + exper, data = wage1)
+# and the regression of the omitted variable on the included one, lm(exper ~ educ, data = wage1).
+# Compute beta2_hat * delta1_tilde, the exper coefficient from the first regression times the educ slope from the second.
+reg_mult_q21     <- lm(wage ~ educ + exper, data = wage1)
+reg_aux_q21      <- lm(exper ~ educ, data = wage1)
+
+beta2_hat_q21    <- coef(reg_mult_q21)["exper"]
+delta1_tilde_q21 <- coef(reg_aux_q21)["educ"]
+
+ovb_q21 <- beta2_hat_q21 * delta1_tilde_q21
+round(unname(ovb_q21), 2)
