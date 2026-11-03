@@ -1,0 +1,251 @@
+# ==============================================================================
+# ECN 377 — Problem Set 11 R Solutions
+# Modeled strictly after the Problem Set 10 R Script
+# Covers: Log-Level MLR, OLS Fitted Values & Residuals, MLR Assumptions,
+#         Simple vs. Multiple Regression (Formula 3.23), & Omitted-Variable Bias
+# Note: Quiz 10 (Wed 11/4) draws 11 questions from this set:
+#       #1, #2, #3, #4, #6, #7, #9, #11, #14, #16, #17.
+# ==============================================================================
+
+install.packages("wooldridge")
+library(wooldridge)
+
+# ==============================================================================
+# PART 1: LOG-LEVEL MULTIPLE REGRESSION (Questions 1 - 3)
+# ==============================================================================
+
+# Question 1 (Quiz 10):
+# A regression gives log(y_hat) = 1.9 + 0.052 * x1 - 0.013 * x2.
+# If x1 rises by 4 and x2 rises by 4, by about what percent does predicted y change?
+# Hint: log-level MLR: % delta y approx 100 * (beta1_hat * delta_x1 + beta2_hat * delta_x2)
+b1_q1 <- 0.052
+b2_q1 <- -0.013
+delta_x1_q1 <- 4
+delta_x2_q1 <- 4
+pct_change_y_q1 <- 100 * (b1_q1 * delta_x1_q1 + b2_q1 * delta_x2_q1)
+round(pct_change_y_q1, 2)
+
+
+# Question 2 (Quiz 10):
+# Data: wage1. Run reg <- lm(log(wage) ~ educ + exper + tenure, data = wage1).
+# By about what percent does predicted wage change when experience rises by 2 years
+# and tenure rises by 1 year, holding education fixed? (Use unrounded coefficients.)
+# Hint: % delta wage approx 100 * (beta_exper * 2 + beta_tenure * 1)
+data("wage1")
+reg <- lm(log(wage) ~ educ + exper + tenure, data = wage1)
+b <- reg$coefficients
+pct_change_wage_q2 <- 100 * (b[3] * 2 + b[4] * 1)
+round(unname(pct_change_wage_q2), 2)
+
+
+# Question 3 (Quiz 10):
+# Data: wage1. Using the same regression of log(wage) on educ, exper, and tenure,
+# what is the predicted hourly wage, in dollars, of a worker with 12 years of
+# education, 10 years of experience, and 3 years of tenure?
+# Hint: predict log(wage) first, then undo the log with exp()
+log_wage_hat_q3 <- b[1] + b[2] * 12 + b[3] * 10 + b[4] * 3
+wage_hat_q3 <- exp(log_wage_hat_q3)
+round(unname(wage_hat_q3), 2)
+
+
+# ==============================================================================
+# PART 2: OLS FITTED VALUES & RESIDUALS (Questions 4 - 6)
+# ==============================================================================
+
+# Question 4 (Quiz 10):
+# After an OLS multiple regression of Y on X1,...,XK (with an intercept) and
+# residuals U_hat = Y - Y_hat, which statements are always true? Select all that apply.
+q4_answer <- c(
+  "The sample average of the residuals is 0.",
+  "The regression passes through the point of sample means: Ybar = b0 + b1*X1bar + ... + bK*XKbar.",
+  "The sample covariance between each Xj and the residuals is 0."
+)
+print(q4_answer)
+# NOT true: cov(Y, residuals) = 0 (the residuals are uncorrelated with the FITTED
+# values, not with Y itself), and "every residual is 0 in a large sample."
+
+# Optional check using the wage1 regression from Question 2:
+mean(resid(reg))                                  # approximately 0
+cov(wage1$educ, resid(reg))                       # approximately 0
+cov(wage1$exper, resid(reg))                      # approximately 0
+cov(wage1$tenure, resid(reg))                     # approximately 0
+cov(log(wage1$wage), resid(reg))                  # NOT 0 (cov with Y is not zero)
+cov(fitted(reg), resid(reg))                      # approximately 0
+
+
+# Question 5 (Quiz 10):
+# Data: gpa1. Run reg <- lm(colGPA ~ ACT + hsGPA, data = gpa1).
+# Compute the predicted colGPA at ACT = mean(gpa1$ACT) and hsGPA = mean(gpa1$hsGPA).
+# Compare with mean(gpa1$colGPA). Why are they the same?
+data("gpa1")
+reg_q5 <- lm(colGPA ~ ACT + hsGPA, data = gpa1)
+b_q5 <- reg_q5$coefficients
+y_hat_q5 <- b_q5[1] + b_q5[2] * mean(gpa1$ACT) + b_q5[3] * mean(gpa1$hsGPA)
+round(unname(y_hat_q5), 2)
+round(mean(gpa1$colGPA), 2)
+q5_answer <- "They are the same because the OLS regression passes through the point of sample means."
+print(q5_answer)
+
+
+# Question 6 (Quiz 10):
+# A multiple regression gives y_hat = 8.4 + 1.6 * x1 - 0.9 * x2.
+# The sample means are x1bar = 13.5 and x2bar = 4.9. What is the sample mean ybar?
+# Hint: ybar = b0 + b1 * x1bar + b2 * x2bar
+b0_q6 <- 8.4
+b1_q6 <- 1.6
+b2_q6 <- -0.9
+x1bar_q6 <- 13.5
+x2bar_q6 <- 4.9
+ybar_q6 <- b0_q6 + b1_q6 * x1bar_q6 + b2_q6 * x2bar_q6
+round(ybar_q6, 2)
+
+
+# ==============================================================================
+# PART 3: MLR ASSUMPTIONS & UNBIASEDNESS (Questions 7 - 10)
+# ==============================================================================
+
+# Question 7 (Quiz 10):
+# Which of these regressions violate MLR3 (no perfect collinearity), so that OLS
+# cannot estimate them? Select all that apply.
+q7_answer <- c(
+  "wage on income in dollars and income in thousands of dollars",
+  "voteA on expendA, expendB and totexpend, where totexpend = expendA + expendB",
+  "a regression with 5 independent variables, estimated on 4 observations"
+)
+print(q7_answer)
+# NOT violations: wage on educ and exper (both vary), and colGPA on ACT and hsGPA
+# (positively correlated, but not perfectly).
+
+
+# Question 8:
+# Data: vote1. Create totexpend <- expendA + expendB, then run
+# lm(voteA ~ expendA + expendB + totexpend, data = vote1).
+# What does R report for the coefficient on totexpend?
+# Hint: run it and look at the output. Can you change totexpend while holding
+# expendA and expendB fixed?
+data("vote1")
+vote1$totexpend <- vote1$expendA + vote1$expendB
+reg_q8 <- lm(voteA ~ expendA + expendB + totexpend, data = vote1)
+summary(reg_q8)
+coef(reg_q8)["totexpend"]    # NA
+q8_answer <- "NA: R drops totexpend because it is an exact linear function of expendA and expendB."
+print(q8_answer)
+
+
+# Question 9 (Quiz 10):
+# Which situation makes MLR4, E[U | X1,...,XK] = 0, fail (so the X variables are endogenous)?
+q9_answer <- "A variable that affects Y and is correlated with X1 is left out of the regression."
+print(q9_answer)
+
+
+# Question 10:
+# Unbiasedness only needs MLR1-MLR4. Why not simply add every variable we can find?
+q10_answer <- "Adding variables can increase the variance of the OLS estimates and can even violate MLR3."
+print(q10_answer)
+
+
+# ==============================================================================
+# PART 4: SIMPLE VS. MULTIPLE REGRESSION & FORMULA (3.23) (Questions 11 - 15)
+# ==============================================================================
+
+# Question 11 (Quiz 10):
+# Formula (3.23): beta1_tilde = beta1_hat + beta2_hat * delta1_tilde.
+# The simple regression of Y on X1 gives beta1_tilde = -0.36. The multiple regression
+# gives beta2_hat = -1.18, and the slope from regressing X2 on X1 is delta1_tilde = -0.51.
+# Find the multiple-regression slope beta1_hat.
+# Hint: solve (3.23) for beta1_hat: beta1_hat = beta1_tilde - beta2_hat * delta1_tilde
+beta1_tilde_q11 <- -0.36
+beta2_hat_q11 <- -1.18
+delta1_tilde_q11 <- -0.51
+beta1_hat_q11 <- beta1_tilde_q11 - beta2_hat_q11 * delta1_tilde_q11
+round(beta1_hat_q11, 2)
+
+
+# Question 12:
+# Data: bwght. Run the simple regression lm(bwght ~ cigs, data = bwght).
+# What is the slope on cigs?
+data("bwght")
+reg_q12 <- lm(bwght ~ cigs, data = bwght)
+beta1_tilde_q12 <- unname(coef(reg_q12)["cigs"])
+round(beta1_tilde_q12, 2)
+
+
+# Question 13:
+# Data: bwght. Now add family income: reg <- lm(bwght ~ cigs + faminc, data = bwght).
+# What is the slope on cigs, holding faminc fixed?
+reg_q13 <- lm(bwght ~ cigs + faminc, data = bwght)
+beta1_hat_q13 <- unname(coef(reg_q13)["cigs"])
+round(beta1_hat_q13, 2)
+
+
+# Question 14 (Quiz 10):
+# Data: bwght. Regress faminc on cigs to get delta1_tilde. Compute beta2_hat * delta1_tilde,
+# the faminc coefficient from the multiple regression times this slope.
+# Hint: by (3.23), beta2_hat * delta1_tilde = beta1_tilde - beta1_hat. Use that to check.
+reg_q14 <- lm(faminc ~ cigs, data = bwght)
+delta1_tilde_q14 <- unname(coef(reg_q14)["cigs"])
+beta2_hat_q14 <- unname(coef(reg_q13)["faminc"])
+product_q14 <- beta2_hat_q14 * delta1_tilde_q14
+round(product_q14, 2)
+
+# Check with (3.23): simple cigs slope minus multiple-regression cigs slope
+round(beta1_tilde_q12 - beta1_hat_q13, 2)
+
+
+# Question 15:
+# The simple-regression cigs slope is about -0.51 and the multiple-regression slope
+# (holding faminc fixed) is about -0.46. Which reading is correct?
+q15_answer <- "About -0.46 per cigarette is the estimated effect of smoking holding income fixed; the other -0.05 is income's effect riding along, because heavier smokers tend to have lower incomes."
+print(q15_answer)
+
+
+# ==============================================================================
+# PART 5: DIRECTION OF OMITTED-VARIABLE BIAS (Questions 16 - 19)
+# ==============================================================================
+# Table 3.2: Bias(beta1_tilde) = beta2 * delta1_tilde, and delta1_tilde has the
+# sign of Cor(X1, X2).
+
+# Question 16 (Quiz 10):
+# An omitted variable X2 lowers Y (beta2 < 0), and X2 is negatively correlated with
+# the included X1 (delta1_tilde < 0). The simple-regression slope on X1 is:
+beta2_sign_q16   <- -1
+delta1_sign_q16  <- -1
+bias_sign_q16 <- beta2_sign_q16 * delta1_sign_q16   # +1 means upward bias
+bias_sign_q16
+q16_answer <- "biased upward"
+print(q16_answer)
+
+
+# Question 17 (Quiz 10):
+# A researcher regresses crop yield on fertilizer use, leaving out land quality.
+# Better land raises yield (beta2 > 0), and farmers use more fertilizer on better land
+# (delta1_tilde > 0). The simple-regression fertilizer slope most likely:
+beta2_sign_q17   <- 1
+delta1_sign_q17  <- 1
+bias_sign_q17 <- beta2_sign_q17 * delta1_sign_q17
+bias_sign_q17
+q17_answer <- "overstates the effect of fertilizer (upward bias)"
+print(q17_answer)
+
+
+# Question 18:
+# A school regresses exam scores on hours of tutoring, leaving out prior ability.
+# Higher ability raises scores (beta2 > 0), but students who sign up for the most
+# tutoring tend to have lower prior ability (delta1_tilde < 0).
+beta2_sign_q18   <- 1
+delta1_sign_q18  <- -1
+bias_sign_q18 <- beta2_sign_q18 * delta1_sign_q18   # -1 means downward bias
+bias_sign_q18
+q18_answer <- "understates the effect of tutoring (downward bias)"
+print(q18_answer)
+
+
+# Question 19:
+# You regress Y on X1 alone, leaving out X2. When does this cause NO omitted-variable
+# bias in the slope on X1? Select all that apply.
+# Hint: Bias(beta1_tilde) = beta2 * delta1_tilde is zero when either leg is zero.
+q19_answer <- c(
+  "X2 is uncorrelated with X1 in the sample (delta1_tilde = 0).",
+  "X2 has no ceteris-paribus effect on Y (beta2 = 0)."
+)
+print(q19_answer)
