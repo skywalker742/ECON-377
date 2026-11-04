@@ -64,14 +64,6 @@ print(q4_answer)
 # NOT true: cov(Y, residuals) = 0 (the residuals are uncorrelated with the FITTED
 # values, not with Y itself), and "every residual is 0 in a large sample."
 
-# Optional check using the wage1 regression from Question 2:
-mean(resid(reg))                                  # approximately 0
-cov(wage1$educ, resid(reg))                       # approximately 0
-cov(wage1$exper, resid(reg))                      # approximately 0
-cov(wage1$tenure, resid(reg))                     # approximately 0
-cov(log(wage1$wage), resid(reg))                  # NOT 0 (cov with Y is not zero)
-cov(fitted(reg), resid(reg))                      # approximately 0
-
 
 # Question 5 (Quiz 10):
 # Data: gpa1. Run reg <- lm(colGPA ~ ACT + hsGPA, data = gpa1).
@@ -249,3 +241,4 @@ q19_answer <- c(
   "X2 has no ceteris-paribus effect on Y (beta2 = 0)."
 )
 print(q19_answer)
+
