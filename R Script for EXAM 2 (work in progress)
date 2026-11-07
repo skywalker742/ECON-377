@@ -5,7 +5,7 @@
 ## Round final answers to the hundredths:  round(answer, 2)
 ## Add your own recipes at the bottom as the course goes on.
 ## ------------------------------------------------------------------
-
+install.packages("wooldridge")
 library(wooldridge)
 
 
@@ -227,10 +227,11 @@ SSR = SST - SSE
 SSR
 
 #Under SLR1–SLR5, the error standard deviation is σ = 5. A sample has the five x values (2,6,8,9,10). Find sd(β̂1). (round to the hundredths) 
-x = c(4,6,8,9,10)
-sigma = 9
+x = c(1,2,3,5,9)
+sigma = 6
 SST_x = sum((x - mean(x))^2)
 sigma/sqrt(SST_x)
+round(sigma/sqrt(SST_x),2)
 
 #Error of Variance (Sigma hat squared)
 SSR = 41
@@ -238,16 +239,23 @@ n = 13
 sigma_hat2 = SSR / (n - 2)
 sigma_hat2
 
+#Finding residual
 library(wooldridge)
 data(wage1)
 reg = lm(wage ~ tenure, data = wage1)
 reg$residuals[32]
 
+#A simple regression on n = 17 observations has 
+#SSR = 257 and SSTx = 67. Find the standard error 
+#se(β̂1). (round to the hundredths)
 
-
-
-
-
+#se(β̂1)= sigma_hat /sqrt(SST_x)
+n = 28
+SSR = 210
+SST_x = 78
+sigma_hat = sqrt(SSR / (n - 2))
+se = sigma_hat / sqrt(SST_x)
+round(se, 2)
 
 library(wooldridge)
 data(wage1)
@@ -259,7 +267,7 @@ data(ceosal1)
 reg = lm(log(salary) ~ roe, data = ceosal1)
 reg$coefficients
 100 * reg$coefficients * 3
- 
+
 
 
 x = c(6,11,43)
@@ -297,3 +305,88 @@ data(wage1)
 reg = lm(wage ~ educ + exper + tenure, data = wage1)
 b1 = reg$coefficients[2]
 b1 * 4
+
+
+sigma = sqrt (396 / 14)
+sigma / sqrt(75)
+round(sigma / sqrt(75),2)
+
+sigma_hat = 10.7
+SST_x = (25-1) * 1.3^2
+se = sigma_hat / sqrt(SST_x)
+round(se,2)
+
+#Under SLR1–SLR5, a regression has sd(β̂1) = 0.8.
+#If the sample were 9 times as large, with x spread out the same way
+#(so SSTx is also 9 times as large), what would sd(β̂1) be? (round to the hundredths)
+
+#sd = sigma / sqrt(SST_x)
+sd = 0.8
+SST_x = 9 #Is 9 times larger
+sqrt(SST_x)
+sd / sqrt(SST_x)
+round(sd / sqrt(SST_x), 2)
+
+#Under SLR1–SLR5, a regression has sd(β̂1) = 0.8.
+#If the sample were 9 times as large, with x spread out the same way
+#(so SSTx is also 9 times as large), what would sd(β̂1) be? (round to the hundredths)
+
+
+
+library("wooldridge")
+data(wage1)
+reg = lm(wage ~ educ + exper + tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+round(b0 + b1 * 13 + b2 * 8 + b3 * 9, 2)
+
+round(b2 * 6,2)
+
+11/sqrt(114)
+round(11/sqrt(114),2)
+
+
+data(wage1)
+reg = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+round((b1 * 3 + b3 * 5) * 100, 2)
+
+data(wage1) 
+reg = lm(log(wage) ~ educ + exper + tenure, data = wage1)      
+b = reg$coefficients
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+exp( b0 + b1 * 12 + b2 * 12 + b3 * 1)
+round(exp( b0 + b1 * 12 + b2 * 12 + b3 * 1),2)
+
+
+data(wage1) 
+reg = lm(wage ~ educ + exper + tenure, data = wage1)      
+b = reg$coefficients
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+b0 + b1 *11 + b2 * 23 + b3 * 11
+
+
+-2.67 - (1.94 * 0.75)
+
+
+data(hprice1)
+long = lm(price ~ bdrms + lotsize, data = hprice1) 
+long$coefficients
+
+short = lm(price ~ bdrms, data = hprice1)
+short$coefficients
