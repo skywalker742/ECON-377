@@ -89,8 +89,8 @@ EY <- sum(p * yv)
 CovXY <- sum(p * xv * yv) - EX * EY     # Cov = E[XY] - E[X]E[Y]
 VarX <- sum(p * xv^2) - EX^2
 VarY <- sum(p * yv^2) - EY^2
-CovXY / sqrt(VarX * VarY)               # Cor(X, Y)
-CovXY / VarX                            # population regression slope beta1
+CovXY / sqrt(VarX * VarY)               # (This gives Cor(X, Y))
+CovXY / VarX                            # This gives population regression slope beta1
 
 
 ## ================= 6. OLS BY HAND (a small sample) =================
@@ -250,9 +250,9 @@ reg$residuals[32]
 #se(β̂1). (round to the hundredths)
 
 #se(β̂1)= sigma_hat /sqrt(SST_x)
-n = 28
-SSR = 210
-SST_x = 78
+n = 21
+SSR = 577
+SST_x = 119
 sigma_hat = sqrt(SSR / (n - 2))
 se = sigma_hat / sqrt(SST_x)
 round(se, 2)
@@ -383,10 +383,100 @@ b0 + b1 *11 + b2 * 23 + b3 * 11
 
 -2.67 - (1.94 * 0.75)
 
+#Ommited Variables Bias
+data(hprice1)
+MLR = lm(price ~ sqrft + lotsize, data = hprice1)
+SLR = lm(lotsize ~ sqrft, data = hprice1)
+
+MLR$coefficients["lotsize"] * SLR$coefficients["sqrft"] 
+
+
+
+
+data(gpa1)
+MLR = lm(colGPA ~ ACT + hsGPA, data = gpa1)
+SLR = lm(hsGPA ~ ACT, data = gpa1)
+
+MLR$coefficients["hsGPA"] * SLR$coefficients["ACT"]
+
+
+data("bwght")
+MLR = lm(bwght ~ cigs + faminc, data = bwght)
+SLR = lm(bwght ~ cigs, data = bwght)
+
+SLR$coefficients["cigs"] - MLR$coefficients["cigs"]
+
+
+#Data: gpa1 (colGPA = college GPA; ACT = ACT score; hsGPA = high-school GPA).
+#A simple regression of colGPA on ACT leaves out hsGPA. Compute β̂2δ̃1
+#The hsGPA coefficient from the multiple regression times the ACT slope 
+#from regressing the omitted variable on the included one. 
+#(Round to four decimal places)
+data(gpa1)
+MLR = lm(colGPA ~ ACT + hsGPA, data = gpa1)
+SLR = lm(hsGPA ~ ACT, data = gpa1)
+
+MLR$coefficients["hsGPA"] * SLR$coefficients["ACT"]
+round(MLR$coefficients["hsGPA"] * SLR$coefficients["ACT"], 4)
+
 
 data(hprice1)
-long = lm(price ~ bdrms + lotsize, data = hprice1) 
-long$coefficients
+MLR = lm(price ~ sqrft + lotsize, data = hprice1)
+SLR = lm(lotsize ~ sqrft, data = hprice1)
 
-short = lm(price ~ bdrms, data = hprice1)
-short$coefficients
+MLR$coefficients["lotsize"] * SLR$coefficients["sqrft"]
+round(MLR$coefficients["lotsize"] * SLR$coefficients["sqrft"], 4)
+
+
+data(wage1)
+reg = lm(wage ~ educ + exper + tenure, data = wage1)
+summary(reg)
+
+data(wage1)
+reg = lm(wage ~ exper, data = wage1)
+round(reg$residuals[56], 2)
+
+
+xv = c(4,5,8,9)
+yv = c(9,5,5,2)
+p = c(.2, .3, .4, .1)
+
+EX <- sum(p * xv)
+EY <- sum(p * yv)
+CovXY <- sum(p * xv * yv) - EX * EY     # Cov = E[XY] - E[X]E[Y]
+VarX <- sum(p * xv^2) - EX^2
+VarY <- sum(p * yv^2) - EY^2
+CovXY / sqrt(VarX * VarY)               # Cor(X, Y) (This gives Cor(X, Y))
+CovXY / VarX                            # This gives population regression slope beta1
+
+
+#Find sse(Bhat_j)
+
+sigma_hat = 4.4
+SST_j = 301
+R2_j = 0.66
+
+sigma_hat / sqrt(SST_j * (1 - R2_j))
+round( sigma_hat / sqrt(SST_j * (1 - R2_j)), 2)
+
+
+
+#Degress of Freedom
+data(hprice1)
+reg <- lm(price ~ sqrft + bdrms + lotsize, data = hprice1)
+summary(reg)$sigma
+summary(reg)$coefficients
+summary(reg)
+
+nrow(hprice1) 
+
+#Compute the standard error of the regression
+data(hprice1)
+SSR <- sum(reg$residuals^2)
+sigma_hat <- sqrt(SSR / 84)
+sigma_hat     
+
+#Find R2_2
+
+R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared
+R2_j
