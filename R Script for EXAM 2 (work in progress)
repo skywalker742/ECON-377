@@ -476,7 +476,134 @@ SSR <- sum(reg$residuals^2)
 sigma_hat <- sqrt(SSR / 84)
 sigma_hat     
 
-#Find R2_2
+#Find SSR
+#Data: hprice1 (price = house price in thousands of dollars; 
+#sqrft = size of the house in square feet; bdrms = number of bedrooms; 
+#lotsize = size of the lot in square feet). Using the same regression reg, 
+#compute the standard error of the regression, sigma_hat = sqrt(SSR/df) . 
+#(round to the hundredths)
+#Hint: SSR <- sum(reg$residuals^2), then sigma_hat <- sqrt(SSR / 84).
+reg = lm(price ~ sqrft + bdrms + lotsize, data = hprice1)
+SSR <- sum(reg$residuals^2)
+sigma_hat <- sqrt(SSR / 84)
+round (sigma_hat,2)
 
+#Find SST_j
+#Data: hprice1 (price = house price in thousands of dollars; 
+#sqrft = size of the house in square feet; bdrms = number of bedrooms; 
+#lotsize = size of the lot in square feet). 
+#Compute SST_j for X_j = bdrms, the total variation of bdrms 
+#around its mean. (round to the hundredths)
+#Hint: SST_j <- sum((hprice1$bdrms - mean(hprice1$bdrms))^2).
+
+data(hprice1)
+SST_j <- sum((hprice1$bdrms - mean(hprice1$bdrms))^2)
+round(SST_j, 2)
+
+#Find R2_j
+#Data: hprice1 (price = house price in thousands of dollars; 
+#sqrft = size of the house in square feet; bdrms = number of bedrooms; 
+#lotsize = size of the lot in square feet). Compute Rj^2 for Xj = bdrms: 
+#the R^2 from regressing bdrms on the other independent variables. 
+#(round to the hundredths)
+#Hint: R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared. 
+#The dependent variable price is not in this regression.
+
+
+R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared
+R2_j
+round(R2_j,2)
+
+#se(Bj_hat)
+#Data: hprice1 (price = house price in thousands of dollars; 
+#sqrft = size of the house in square feet; bdrms = number of bedrooms; 
+#lotsize = size of the lot in square feet). 
+#Put the pieces together: 
+#compute se(Bj_hat) = sigma_hat / sqrt(SSTj * (1-Rj^2))
+#for the bdrms coefficient. (round to the hundredths)
+#Hint: use the unrounded objects from problems 9-11: 
+#sigma_hat / sqrt(SST_j * (1 - R2_j)).
+
+#Look at easier way underneath
+
+data(hprice1)
+reg = lm(price ~ sqrft + bdrms + lotsize, data = hprice1)
+SSR <- sum(reg$residuals^2)
+sigma_hat <- sqrt(SSR / 84)
+SST_j <- sum((hprice1$bdrms - mean(hprice1$bdrms))^2)
+R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared
+
+se_bj_hat = sigma_hat / sqrt(SST_j * (1 - R2_j))
+round(se_bj_hat, 2)
+
+#OR summary(reg)$coefficients[3, 2]
+
+summary(reg)$coefficients[3, 2]
+#Look for the bdrms coefficent after hitting summary(reg) -> its the same 9.01
+
+
+sqrt(1500/62)
+
+#Data: wage1 (wage = average hourly earnings in dollars; exper = years of experience). Regress wage on exper by OLS. What is the OLS residual of the worker in row 53? (round to the hundredths)
+data(wage1)
+reg = lm(wage ~ exper, data = wage1)
+reg$residuals[53]
+
+#Data: ceosal1 (salary = CEO salary in thousands of dollars). What is the sample standard deviation of salary? (round to the hundredths)
+data(ceosal1)
+library(wooldridge)
+sd(ceosal1$salary)
+
+
+data(wage1)
+reg = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+exp(b0 + b1*14 + b2* 23 + b3*7)
+
+# E[X] = 5 and E[X²] = 34. Find the standard deviation of -5X + 7. (round to the hundredths)
+
+EX = 2
+EX2 = 13
+VarX <- EX2 - EX^2                      # Var(X) = E[X^2] - (E[X])^2
+sqrt(VarX)                              # sd(X)
+
+
+x = c(1,2,8,9,11)
+y = c(19,8,7,5,4)
+
+reg = lm(y ~ x)
+reg$coefficients[1]
+
+x = c(14,14,8,10,14)
+sd(x)
+
+data(wage1)
+reg = lm(wage ~ tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[1]
+
+old = b1* 15
+new = b1* 24
+new - old
+
+#Data: wage1. What is the sample mean of wage among workers with exactly 14 years of education? (round to the hundredths)
+library(wooldridge) 
+mean(wage1$wage[wage1$educ == 14])
+
+#Data: hprice1 (price = house price in thousands of dollars). What is the sample standard deviation of price? (round to the hundredths)
+data(hprice1)
+sd(hprice1$price)
+
+x = c(2,5,7,8,9,13)
+y = c(10,7,12,5,12,12)
+
+reg = lm(y~x)
+residuals(reg)
+sum(residuals(reg))
+round (sum(residuals(reg)), 2)
 R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared
 R2_j
