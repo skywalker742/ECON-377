@@ -605,5 +605,63 @@ reg = lm(y~x)
 residuals(reg)
 sum(residuals(reg))
 round (sum(residuals(reg)), 2)
-R2_j <- summary(lm(bdrms ~ sqrft + lotsize, data = hprice1))$r.squared
-R2_j
+
+
+#X has the probability table below. Find Var(3X − 5). (round to the hundredths)
+
+#x	0	1	2	3
+#P(X = x)	0.1	0.4	0.3	0.2
+
+xv <- c(0, 1, 2, 3)                     # values X can take
+p <- c(0.1, 0.4, 0.3, 0.2)              # their probabilities (must sum to 1)
+EX <- sum(p * xv)                       # E[X]
+EX2 <- sum(p * xv^2)                    # E[X^2]
+VarX <- EX2 - EX^2                      # Var(X) = E[X^2] - (E[X])^2
+3^2 * VarX
+
+100 * (0.00038 * 250 + 0.029 * 1)
+
+round (1.458, 2)
+
+library(wooldridge)
+data(ceosal1)
+reg = lm(log(salary) ~ roe, data = ceosal1)
+b1 = reg$coefficients[2]
+
+(100 * b1) * 15
+
+x = c(1,2,5,8,9,10)
+var(x)
+
+5 * var(x)
+3 / sqrt(5 * var(x))
+
+
+data(bwght)
+reg = lm(log(bwght) ~ log(faminc), data = bwght)
+b1 = reg$coefficients[2]
+b1 * -25
+
+data(wage1)
+reg = lm(wage ~ educ + exper + tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+
+data(wage1)
+reg = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+b3 = reg$coefficients[4]
+(b1 * 100) * 4 + (b2 * 100) * 5
+
+exp( b0 + b1 * 16 + b2 * 4 + b3 * 1)
+
+#Data: hprice1 (price = house price in thousands of dollars; bdrms = number of bedrooms; sqrft = size of the house in square feet). The simple regression of price on bdrms leaves out sqrft. Run the multiple regression lm(price ~ bdrms + sqrft, data = hprice1) and the regression of the omitted variable on the included one, lm(sqrft ~ bdrms, data = hprice1). Compute β̂2·δ̃1: the sqrft coefficient from the multiple regression times the bdrms slope from the second regression.
+data(hprice1)
+MLR = lm(price ~ bdrms + sqrft, data = hprice1)
+SLR = lm(sqrft ~ bdrms, data = hprice1)
+
+MLR$coefficients["sqrft"] * SLR$coefficients["bdrms"] 
