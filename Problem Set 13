@@ -1,0 +1,156 @@
+## ECN 377 - PROBLEM SET 13  (all 22 questions, in order)
+## Quiz 11 questions are marked ***QUIZ***: #1, #3, #4, #7, #14, #17, #20
+## Change the numbers to the ones on the quiz. Round to the hundredths.
+
+library(wooldridge)
+
+
+#1 ***QUIZ*** Why is it a t distribution and not N(0,1)?
+###ANSWER###
+#The standard error replaces the unknown sigma with the estimate sigma_hat, which varies from sample to sample.
+
+
+#2 Day 22 simulation: what happened as n grew?
+###ANSWER###
+#The histogram of B1_hat concentrated around the true B1, while the histogram of t kept its width and looked more and more like N(0,1).
+
+
+#3 ***QUIZ*** Degrees of freedom. K = 3 independent variables, n = 119 observations
+#df = n - K - 1
+n = 119
+K = 3
+n - K - 1
+
+
+#4 ***QUIZ*** Find the t-statistic. Bj_hat = 2.35, se(Bj_hat) = 0.71
+#t = Bj_hat / se
+b = 2.35
+se = 0.71
+round(b / se, 2)
+
+
+#5 Data: wage1. Find the t-statistic for tenure
+data(wage1)
+reg = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+s = summary(reg)$coefficients
+round(s[4, 1] / s[4, 2], 2)     # estimate / se
+s[4, 3]                         # check: the "t value" column
+
+
+#6 H1: Bj > 0, 5% level, df = 40. Find the critical value c
+#right tail -> positive c
+round(qt(0.95, df = 40), 2)
+
+
+#7 ***QUIZ*** H1: Bj > 0, c = 1.71, t = 1.52. What do you conclude?
+#H1: Bj > 0 -> reject only if t > c
+#H1: Bj < 0 -> reject only if t < c
+t = 1.52
+c = 1.71
+t > c        # TRUE = Reject H0,  FALSE = Fail to reject H0
+###ANSWER###
+#Fail to reject H0, because t < c
+
+
+#8 H1: Bj < 0, 5% level, df = 32. Find the critical value c
+#left tail -> negative c
+round(qt(0.05, df = 32), 2)
+
+
+#9 H1: Bj < 0, c = -1.70. Two researchers get t = -2.10 and t = -1.20
+#H1: Bj < 0 -> reject only if t < c
+c = -1.70
+-2.10 < c     # TRUE  = reject
+-1.20 < c     # FALSE = fail to reject
+###ANSWER###
+#Reject H0 when t = -2.10; fail to reject when t = -1.20.
+
+
+#10 What does a significance level of alpha = 0.05 mean?
+###ANSWER###
+#If H0 is true, there is a 5% chance that the test rejects it.
+
+
+#11 Data: ceosal1. H1: B_roe > 0. Find the t-statistic for roe
+data(ceosal1)
+reg = lm(log(salary) ~ log(sales) + roe, data = ceosal1)
+summary(reg)$coefficients
+round(summary(reg)$coefficients["roe", 3], 2)
+
+
+#12 Data: ceosal1. Critical value c at 5%, df = n - K - 1
+n = nrow(ceosal1)
+K = 2
+round(qt(0.95, df = n - K - 1), 2)
+
+
+#13 Using 11 and 12, what do you conclude at 5%?
+t = summary(reg)$coefficients["roe", 3]
+c = qt(0.95, df = n - K - 1)
+t > c         # TRUE = reject
+###ANSWER###
+#Reject H0, because t > c: a higher roe is associated with a higher salary, holding sales fixed.
+
+
+#14 ***QUIZ*** Data: bwght. Find the t-statistic for cigs
+data(bwght)
+reg = lm(bwght ~ cigs + faminc, data = bwght)
+summary(reg)$coefficients                      # look at the "t value" column
+round(summary(reg)$coefficients["cigs", 3], 2)
+
+
+#15 Data: bwght. H1: B_cigs < 0. Critical value c at 1%
+n = nrow(bwght)
+K = 2
+round(qt(0.01, df = n - K - 1), 2)
+#Other levels:  qt(0.05, ...) = left tail 5%   qt(0.95, ...) = right tail 5%   qt(0.99, ...) = right tail 1%
+
+
+#16 Using 14 and 15, what do you conclude at 1%?
+t = summary(reg)$coefficients["cigs", 3]
+c = qt(0.01, df = n - K - 1)
+t < c         # TRUE = reject
+###ANSWER###
+#Reject H0, because t < c: more cigarettes per day are associated with a lower birth weight, holding family income fixed.
+
+
+#17 ***QUIZ*** Slope = 0.062 with x in percent. What is the slope if x is a decimal?
+#percent -> decimal: multiply by 100
+#decimal -> percent: divide by 100
+slope = 0.062
+round(slope * 100, 2)
+
+
+#18 sd(B1_hat) = 1.67. Sample 16 times as large (SST1 16 times as large). New sd?
+#sd = sigma / sqrt(SST) -> divide by sqrt(16), not 16
+sd = 1.67
+round(sd / sqrt(16), 2)
+
+
+#19 Data: wage1. Find Rj^2 for Xj = tenure
+#regress tenure on the OTHER x's (wage is not in it)
+R2_j = summary(lm(tenure ~ educ + exper, data = wage1))$r.squared
+round(R2_j, 2)
+
+
+#20 ***QUIZ*** Data: hprice1. Predicted price of a 2,000 sq ft house with 3 bedrooms
+#plug in log(2000), not 2000, then exp() at the end
+data(hprice1)
+reg = lm(log(price) ~ log(sqrft) + bdrms, data = hprice1)
+b0 = reg$coefficients[1]
+b1 = reg$coefficients[2]
+b2 = reg$coefficients[3]
+
+round(exp(b0 + b1 * log(2000) + b2 * 3), 2)
+
+
+#21 Omitted variable bias. B2 = -1.6, delta1 = -0.35
+#Bias = B2 * delta1  (keep the signs)
+B2 = -1.6
+delta1 = -0.35
+round(B2 * delta1, 2)
+
+
+#22 Ability is in U and more able students study more hours
+###ANSWER###
+#MLR4 fails, because ability is in U and moves with hours, so E[U | hours] != 0.
